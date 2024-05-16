@@ -10,11 +10,17 @@ use App\Http\Controllers\SurgeryTypesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IndexController;
 
+use App\Http\Controllers\AntibioticsController;
+
 
 Route::resources([
     'surgeries' => SurgeriesController::class,
     'surgeries.surgerytypes' => SurgeryTypesController::class,
 ]);
+
+Route::resource('antibiotics', AntibioticsController::class)
+    ->middleware(['auth']);
+
 
 Route::get('/', [IndexController::class, 'index'])->name('index')
     ->middleware(['auth']);
