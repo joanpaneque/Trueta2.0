@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('health_flags', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('surgery_type_id')->cascadeOnDelete();
 
             $table->string('name');
+            $table->text('description')->nullable();
 
             $table->timestamps();
         });
