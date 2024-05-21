@@ -22,14 +22,10 @@ Route::resource('antibiotics', AntibioticsController::class)
     ->middleware(['auth']);
 
 
-Route::get('/', [IndexController::class, 'index'])->name('index')
-    ->middleware(['auth']);
+Route::get('/', [IndexController::class, 'index'])->middleware(['auth'])->name('index');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('profile', ProfileController::class)
-    ->only(['edit', 'update', 'destroy'])
-    ->middleware(['auth']);
+Route::resource('profile', ProfileController::class)->only(['edit', 'update', 'destroy'])->middleware(['auth']);
 
 require __DIR__.'/auth.php';
