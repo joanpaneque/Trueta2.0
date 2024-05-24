@@ -1,17 +1,22 @@
 <script setup>
     import { usePage, router } from '@inertiajs/vue3';
+    import { indexPage } from '@/Helpers/indexer';
 
     const page = usePage().component;
     const pageProps = usePage().props;
+
+    const pageId = indexPage(page);
+
 </script>
 
 <template>
     <div class="breadcrumbs-container">
+        <!-- {{ pageId }} -->
         <span
             class="breadcrumbs-crumb"
             :class="
             {
-                'active': page === 'Surgeries/Index'
+                'active': pageId === 0,
             }"
             @click="router.get(route('dashboard'))">
             Cirurgia
@@ -21,10 +26,10 @@
             class="breadcrumbs-crumb"
             :class="
             {
-                'active': page === 'Surgeries/SurgeryTypes/Index',
-                'disabled': page === 'Surgeries/Index'
+                'active': pageId === 1,
             }"
-            @click="page !== 'Surgeries/Index' && page !== 'Surgeries/SurgeryTypes/Index' ? router.get(route('surgeries.types.index', pageProps.surgeryId)) : null">
+            :disabled="pageId < 1 ? '1' : '0'"
+            @click="router.get(route('surgeries.types.index', pageProps.surgeryId))">
             Tipus
         </span>
         <span>/</span>
@@ -32,10 +37,10 @@
             class="breadcrumbs-crumb"
             :class="
             {
-                'active': page === 'Surgeries/SurgeryTypes/HealthFlags/Index',
-                'disabled': page === 'Surgeries/Index' || page === 'Surgeries/SurgeryTypes/Index'
+                'active': pageId === 2,
             }"
-            @click="page !== 'Surgeries/Index' && page !== 'Surgeries/SurgeryTypes/Index' && page !== 'Surgeries/SurgeryTypes/HealthFlags/Index' ? router.get(route('surgeries.types.flags.index', [pageProps.surgeryId, pageProps.surgeryTypeId])) : null">
+            :disabled="pageId < 2 ? '1' : '0'"
+            @click="router.get(route('surgeries.types.flags.index', [pageProps.surgeryId, pageProps.surgeryTypeId]))">
             Condicions
         </span>
         <span>/</span>
@@ -43,10 +48,10 @@
             class="breadcrumbs-crumb"
             :class="
             {
-                'active': page === 'Surgeries/SurgeryTypes/HealthFlags/Results/Index',
-                'disabled': page === 'Surgeries/Index' || page === 'Surgeries/SurgeryTypes/Index' || page === 'Surgeries/SurgeryTypes/HealthFlags/Index'
-            }
-            ">
+                'active': pageId === 3,
+            }"
+            :disabled="pageId < 3 ? '1' : '0'"
+            >
             Resultats
         </span>
     </div>
@@ -73,15 +78,24 @@
         cursor: pointer;
     }
 
+    .breadcrumbs-crumb[disabled="1"] {
+        opacity: 0.5;
+        text-decoration: none;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
     .breadcrumbs-crumb.active {
         color: #a24100;
         text-decoration: none;
         cursor: default;
     }
 
-    .breadcrumbs-crumb.disabled {
+
+
+    /* .breadcrumbs-crumbs[disabled] {
         opacity: 0.5;
         text-decoration: none;
         cursor: not-allowed;
-    }
+    } */
 </style>

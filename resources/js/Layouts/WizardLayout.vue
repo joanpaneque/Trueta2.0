@@ -1,9 +1,21 @@
 <script setup>
+import { router, usePage } from '@inertiajs/vue3'
+
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown/Dropdown.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue';
 import CreateButton from '@/Components/Buttons/CreateButton.vue';
-import { router } from '@inertiajs/vue3'
+import GoBackButton from '@/Components/Buttons/GoBackButton.vue';
+import { isIndex, createRoute, requiredParams } from '@/Helpers/indexer';
+
+const page = usePage().component;
+const pageProps = usePage().props;
+
+const isIndexPage = isIndex(page);
+const createPageRoute = createRoute(page);
+const params = requiredParams(pageProps);
+
+console.log(params);
 
 </script>
 
@@ -27,7 +39,8 @@ import { router } from '@inertiajs/vue3'
                 <Breadcrumbs />
             </div>
             <div>
-                <CreateButton @click="router.get('/surgeries/create')" />
+                <CreateButton v-if="isIndexPage" @click="router.get(route(createPageRoute, params))"></CreateButton>
+                <GoBackButton v-else></GoBackButton>
             </div>
         </header>
         <nav class="wizard-layout-aside"></nav>

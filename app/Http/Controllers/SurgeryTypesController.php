@@ -30,14 +30,31 @@ class SurgeryTypesController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(Request $request, string $surgeryId)
     {
-        //
+        return Inertia::render('Surgeries/SurgeryTypes/Create', [
+            'surgeryId' => $surgeryId,
+            'surgery' => Surgery::find($surgeryId),
+        ]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, string $surgeryId)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'prophylaxis' => 'required|boolean',
+        ]);
+
+        dd("asdsad");
+
+        SurgeryType::create([
+            'surgery_id' => $surgeryId,
+            'name' => $request->input('name'),
+            'prophylaxis' => $request->input('prophylaxis'),
+        ]);
+
+
+        return redirect()->route('surgeries.types.index', ['surgeryId' => $surgeryId]);
     }
 
     public function show(string $id)

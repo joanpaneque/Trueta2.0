@@ -4,12 +4,20 @@ import { ref, defineProps, defineEmits } from 'vue';
 const props = defineProps({
     id: {
         type: Number,
-        default: ''
+        default: 0
     },
     name: {
         type: String,
         default: ''
     },
+    value: {
+        type: Boolean,
+        default: false
+    },
+    modelValue: {
+        type: Boolean,
+        default: false
+    }
 });
 
 const emits = defineEmits(['input']);
@@ -21,7 +29,7 @@ const updateInput = (value) => {
     emits('input', value);
 };
 
-const checked = ref(false);
+const checked = ref(props.modelValue || props.value);
 
 </script>
 
@@ -56,5 +64,6 @@ const checked = ref(false);
 
     label {
         pointer-events: none;
+        user-select: none;
     }
 </style>

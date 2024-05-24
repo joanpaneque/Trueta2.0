@@ -10,6 +10,10 @@ const props = defineProps({
         type: String,
         default: ''
     },
+    value: {
+        type: String,
+        default: ''
+    },
     icon: {
         type: String,
         default: ''
@@ -25,12 +29,16 @@ const props = defineProps({
     autofocus: {
         type: Boolean,
         default: false
+    },
+    disabled: {
+        type: Boolean,
+        default: false
     }
 });
 
 const emits = defineEmits(['update:modelValue']);
 
-const input = ref(props.modelValue);
+const input = ref(props.modelValue || props.value);
 
 watch(() => props.modelValue, (newValue) => {
     input.value = newValue;
@@ -43,7 +51,7 @@ const updateInput = (value) => {
 </script>
 
 <template>
-    <div class="input-container">
+    <div class="input-container" :class="{ 'disabled': disabled }">
         <label :for="id" class="label" style="display: none;">Dummy</label>
         <label :for="'color-'+id" class="label" style="display: none;">Dummy</label>
         <input :name="name" required autocomplete="off"
@@ -95,5 +103,14 @@ input[type="color"] {
     top: 50%;
     transform: translateY(-50%);
     border-radius: 8px;
+}
+
+.input-container.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.input-container.disabled:hover {
+    cursor: not-allowed;
 }
 </style>

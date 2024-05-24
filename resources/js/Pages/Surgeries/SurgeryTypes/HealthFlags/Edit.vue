@@ -1,26 +1,28 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
+import { defineProps } from 'vue';
 import WizardLayout from '@/Layouts/WizardLayout.vue';
-import FormInput from '@/Components/Form/FormInput.vue';
-import FormSubmit from '@/Components/Form/FormSubmit.vue';
-import FormColor from '@/Components/Form/FormColor.vue';
 
-const form = useForm({
-    name: '',
-    color: ''
+const props = defineProps({
+    surgeryId: {
+        type: String,
+        default: '0'
+    },
+    surgeryTypeId: {
+        type: String,
+        default: '0'
+    },
+    healthFlag: {
+        type: Object,
+        default: '0'
+    }
 });
-
-const submit = () => {
-    form.post(route('surgeries.store'));
-};
-
 </script>
 
 <template>
     <WizardLayout>
-        <form @submit.prevent="submit" class="create-surgery-form">
-            <h1 class="create-surgery-form-title">Crear cirurgia</h1>
-            <FormInput
+        <form @submit.prevent="submit" class="edit-health-flag-form">
+            <h1 class="edit-health-flag-form-title">Editar condició de salut</h1>
+            <!-- <FormInput
                 v-model="form.name"
                 type="text"
                 placeholder="Nom de la cirurgia"
@@ -36,19 +38,19 @@ const submit = () => {
                 id="color"
                 name="color"
             />
-            <FormSubmit>Crear cirurgia</FormSubmit>
+            <FormSubmit>Crear cirurgia</FormSubmit> -->
         </form>
     </WizardLayout>
 </template>
 
 <style scoped>
-.create-surgery-form {
+.edit-health-flag-form {
     background: none;
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
-.create-surgery-form-title {
+.edit-health-flag-form-title {
     font-size: 1.5rem;
 }
 

@@ -61,9 +61,14 @@ class HealthFlagsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $surgeryId, string $typeId, string $id)
     {
-        //
+        $healthFlag = HealthFlag::findOrFail($id);
+        return Inertia::render('Surgeries/SurgeryTypes/HealthFlags/Edit', [
+            'healthFlag' => $healthFlag,
+            'surgeryId' => $surgeryId,
+            'surgeryTypeId' => $typeId,
+        ]);
     }
 
     /**

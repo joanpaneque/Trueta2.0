@@ -1,24 +1,26 @@
 
 <script setup>
-    import { indexPage, isIndex} from '@/Helpers/indexer';
+    import { indexRoutePage, requiredParams } from '@/Helpers/indexer';
     import { usePage, router } from '@inertiajs/vue3';
 
     const page = usePage().component;
+    const pageProps = usePage().props;
 
-    const pageId = indexPage(page);
+    const indexRoute = indexRoutePage(page);
 
-    const createReferences = {
-        '0': 'Cirurgia',
-        '1': 'Tipus de cirurgia',
-        '2': 'Condició de salut',
+    const params = requiredParams(pageProps);
+
+    function goBack() {
+        router.get(route(indexRoute, params));
     }
+
 
 </script>
 
 <template>
-    <div class="create-button-container">
-        <img src="/assets/icons/add.svg" alt="Create" />
-        <span>{{ createReferences[pageId] }}</span>
+    <div class="create-button-container" @click="goBack">
+        <img src="/assets/icons/undo.svg" alt="Create" />
+        <span>Tornar</span>
     </div>
 </template>
 

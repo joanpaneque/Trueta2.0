@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
         ]);
         
         Surgery::create([
-            'name' => 'PLASTICA I DERMATOLOGICA',
+            'name' => 'PLÀSTICA I DERMATOLÒGICA',
             'color' => '#0000FF' // Azul
         ]);
         
