@@ -3,15 +3,16 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown/Dropdown.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue';
 import CreateButton from '@/Components/Buttons/CreateButton.vue';
+import { router } from '@inertiajs/vue3'
 
 </script>
 
 <template>
-    <div class="authenticated-layout-container">
-        <div class="authenticated-layout-logo">
+    <div class="wizard-layout-container">
+        <div class="wizard-layout-logo">
             <ApplicationLogo />
         </div>
-        <header class="authenticated-layout-header">
+        <header class="wizard-layout-header">
             <div>
                 <Dropdown :routes="[{
                 label: 'Pàgina d\'inici',
@@ -22,37 +23,58 @@ import CreateButton from '@/Components/Buttons/CreateButton.vue';
                 }]">
                 </Dropdown>
             </div>
+            <div>
+                <Breadcrumbs />
+            </div>
+            <div>
+                <CreateButton @click="router.get('/surgeries/create')" />
+            </div>
         </header>
-        <nav class="authenticated-layout-aside"></nav>
-        <main class="authenticated-layout-main">
+        <nav class="wizard-layout-aside"></nav>
+        <main class="wizard-layout-main">
             <slot />
         </main>
     </div>
 </template>
 
 <style scoped>
-.authenticated-layout-container {
+.wizard-layout-container {
     display: grid;
-    gap: 30px;
+    gap: 15px;
     padding: 30px;
 }
 
-.authenticated-layout-aside {
+.wizard-layout-aside {
     display: none;
 }
 
-.authenticated-layout-logo {
+.wizard-layout-logo {
     display: flex;
     justify-content: center;
 }
 
-.authenticated-layout-logo img {
+.wizard-layout-logo img {
     height: 50px;
 }
 
-.authenticated-layout-header {
+.wizard-layout-header {
     display: grid;
     gap: 15px;
 }
 
+/* .wizard-layout-logo {
+        grid-area: logo;
+    }
+
+    .wizard-layout-header {
+        grid-area: header;
+    }
+
+    .wizard-layout-aside {
+        grid-area: aside;
+    }
+
+    .wizard-layout-main {
+        grid-area: main;
+    } */
 </style>

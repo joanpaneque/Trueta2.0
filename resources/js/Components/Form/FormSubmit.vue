@@ -23,8 +23,10 @@ const handleClick = () => {
     cursor: pointer;
     transition: background-color 0.3s ease;
 
-    background: #ea8b29;
-    color: #fdfdfd;
+    background: #a24100;
+    filter: brightness(1.6) saturate(0.9);
+    color: #fff;
+    width: 100%;
 }
 
 .submit-button:hover {

@@ -1,6 +1,6 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3'; 
+import { Head, useForm } from '@inertiajs/vue3'; 
 import FormInput from '@/Components/Form/FormInput.vue';
 import FormSubmit from '@/Components/Form/FormSubmit.vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
@@ -28,12 +28,16 @@ const submit = () => {
                 type="email"
                 placeholder="Correu electrònic"
                 icon="/assets/icons/at.svg"
+                id="email"
+                name="email"
             />
             <FormInput
                 v-model="form.password"
                 type="password"
                 placeholder="Contrasenya"
                 icon="/assets/icons/lock.svg"
+                id="password"
+                name="password"
             />
             <FormSubmit>Iniciar sessió</FormSubmit>
             <div>

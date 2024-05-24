@@ -6,10 +6,6 @@ const props = defineProps({
         type: String,
         default: ''
     },
-    type: {
-        type: String,
-        default: 'text'
-    },
     modelValue: {
         type: String,
         default: ''
@@ -49,9 +45,11 @@ const updateInput = (value) => {
 <template>
     <div class="input-container">
         <label :for="id" class="label" style="display: none;">Dummy</label>
-        <input :id="id" :name="name" required autofocus autocomplete="off" v-model="input"
-            @input="updateInput($event.target.value)" :placeholder="placeholder" :type="type" :autofocus="autofocus">
+        <label :for="'color-'+id" class="label" style="display: none;">Dummy</label>
+        <input :name="name" required autocomplete="off"
+             :placeholder="placeholder" type="text" disabled :id="id">
         <img :src="icon" alt="Icon" class="icon">
+        <input type="color" v-model="input" @input="updateInput($event.target.value)" :id="'color-'+id" :name="name"/>
     </div>
 </template>
 
@@ -84,6 +82,18 @@ input:focus-within {
 }
 
 input::placeholder {
-    color: #bbb;
+    color: #000;
+}
+
+input[type="color"] {
+    background: #fff;
+    padding: 2px 3px;
+    height: 30px;
+    width: 40px;
+    position: absolute;
+    right: 7px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 8px;
 }
 </style>
