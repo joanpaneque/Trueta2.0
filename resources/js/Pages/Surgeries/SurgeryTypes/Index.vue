@@ -42,6 +42,7 @@
                 :key="sType.id"
                 :color="color"
                 :text="sType.name"
+                @click="router.get(route('surgeries.types.show', [surgeryId, sType.id]))"
             />
         </div>
     </WizardLayout>

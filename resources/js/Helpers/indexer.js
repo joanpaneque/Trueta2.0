@@ -1,6 +1,6 @@
 export const pages = {
     0: ['Surgeries/Index', 'Surgeries/Create'],
-    1: ['Surgeries/SurgeryTypes/Index', 'Surgeries/SurgeryTypes/Create'],
+    1: ['Surgeries/SurgeryTypes/Index', 'Surgeries/SurgeryTypes/Create', 'Surgeries/SurgeryTypes/Show'],
     2: ['Surgeries/SurgeryTypes/HealthFlags/Index', 'Surgeries/SurgeryTypes/HealthFlags/Create', 'Surgeries/SurgeryTypes/HealthFlags/Edit'],
     3: ['Surgeries/SurgeryTypes/HealthFlags/Results/Index']
 }
@@ -10,6 +10,7 @@ const parsedRoutes = {
     'Surgeries/Create': 'surgeries.create',
     'Surgeries/SurgeryTypes/Index': 'surgeries.types.index',
     'Surgeries/SurgeryTypes/Create': 'surgeries.types.create',
+    'Surgeries/SurgeryTypes/Show': 'surgeries.types.show',
     'Surgeries/SurgeryTypes/HealthFlags/Index': 'surgeries.types.flags.index',
     'Surgeries/SurgeryTypes/HealthFlags/Create': 'surgeries.types.flags.create',
     'Surgeries/SurgeryTypes/HealthFlags/Edit': 'surgeries.types.flags.edit',

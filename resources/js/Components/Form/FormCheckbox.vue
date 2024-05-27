@@ -27,15 +27,17 @@ const input = ref(props.modelValue);
 const updateInput = (value) => {
     input.value = value;
     emits('input', value);
+    emits('update:modelValue', value);
 };
 
 const checked = ref(props.modelValue || props.value);
+
 
 </script>
 
 <template>
     <div class="input-container" @click="checked = !checked; updateInput(checked)">
-        <input :id="id" :name="name" type="checkbox" v-model="checked">
+        <input :id="id" :name="name" type="checkbox" v-model="checked" />
         <label :for="id" class="label">{{ name }}</label>
     </div>
 </template>

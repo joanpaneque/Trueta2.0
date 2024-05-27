@@ -45,21 +45,24 @@ class SurgeryTypesController extends Controller
             'prophylaxis' => 'required|boolean',
         ]);
 
-        dd("asdsad");
-
         SurgeryType::create([
             'surgery_id' => $surgeryId,
             'name' => $request->input('name'),
             'prophylaxis' => $request->input('prophylaxis'),
         ]);
 
-
-        return redirect()->route('surgeries.types.index', ['surgeryId' => $surgeryId]);
+        return redirect()->route('surgeries.types.index', ['surgery' => $surgeryId]);
     }
 
-    public function show(string $id)
+    public function show(string $surgeryId, string $surgeryTypeId)
     {
-        //
+
+        $surgeryType = SurgeryType::find($surgeryTypeId);
+
+        return Inertia::render('Surgeries/SurgeryTypes/Show', [
+            'surgeryId' => $surgeryId,
+            'surgeryType' => $surgeryType,
+        ]);
     }
 
     public function edit(string $id)
