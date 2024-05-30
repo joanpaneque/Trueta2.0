@@ -13,10 +13,7 @@ const props = defineProps({
 })
 
 
-// create a function that recieves a color and generates a good readable text matching color
-// if the background is orange, the text should be darker orange or lighter orange depending on the background
 function getReadableTextColor(backgroundColor) {
-    // Helper function to convert hex color to RGB
     function hexToRgb(hex) {
         hex = hex.replace(/^#/, '');
         if (hex.length === 3) {
@@ -30,12 +27,10 @@ function getReadableTextColor(backgroundColor) {
         };
     }
 
-    // Helper function to convert RGB to hex
     function rgbToHex(r, g, b) {
         return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
     }
 
-    // Helper function to calculate luminance
     function luminance(r, g, b) {
         const a = [r, g, b].map(v => {
             v /= 255;
@@ -44,29 +39,23 @@ function getReadableTextColor(backgroundColor) {
         return a[0] * 0.1126 + a[1] * 0.7152 + a[2] * 0.0722;
     }
 
-    // Helper function to get contrasting color (black or white)
     function getContrastingColor(r, g, b) {
         const lum = luminance(r, g, b);
         return lum > 0.5 ? '#000000' : '#FFFFFF';
     }
 
-    // Convert background color to RGB
     const bgColorRgb = hexToRgb(backgroundColor);
 
-    // Calculate the luminance of the background color
     const bgColorLuminance = luminance(bgColorRgb.r, bgColorRgb.g, bgColorRgb.b);
 
-    // Adjust text color based on the background luminance
     let textColor;
     if (bgColorLuminance > 0.5) {
-        // Darken the background color more for text if background is light
         textColor = rgbToHex(
             Math.max(0, bgColorRgb.r - 150),
             Math.max(0, bgColorRgb.g - 150),
             Math.max(0, bgColorRgb.b - 150)
         );
     } else {
-        // Lighten the background color more for text if background is dark
         textColor = rgbToHex(
             Math.min(255, bgColorRgb.r + 150),
             Math.min(255, bgColorRgb.g + 150),
@@ -74,7 +63,6 @@ function getReadableTextColor(backgroundColor) {
         );
     }
 
-    // Ensure the text color contrasts sufficiently with the background
     const textColorRgb = hexToRgb(textColor);
     const textColorLuminance = luminance(textColorRgb.r, textColorRgb.g, textColorRgb.b);
 

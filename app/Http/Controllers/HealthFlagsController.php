@@ -37,9 +37,14 @@ class HealthFlagsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request, string $surgeryId, string $typeId)
     {
-        //
+        $surgeryType = SurgeryType::find($typeId);
+        return Inertia::render('Surgeries/SurgeryTypes/HealthFlags/Create', [
+            'surgeryId' => $surgeryId,
+            'surgeryTypeId' => $typeId,
+            'surgeryType' => $surgeryType,
+        ]);
     }
 
     /**

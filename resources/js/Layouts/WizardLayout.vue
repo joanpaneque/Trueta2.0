@@ -15,7 +15,6 @@ const isIndexPage = isIndex(page);
 const createPageRoute = createRoute(page);
 const params = requiredParams(pageProps);
 
-console.log(params);
 
 </script>
 

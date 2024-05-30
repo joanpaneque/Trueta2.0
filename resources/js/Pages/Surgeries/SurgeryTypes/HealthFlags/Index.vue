@@ -3,6 +3,7 @@ import { defineProps } from 'vue';
 import WizardLayout from '@/Layouts/WizardLayout.vue';
 import FormCheckbox from '@/Components/Form/FormCheckbox.vue';
 import FormSubmit from '@/Components/Form/FormSubmit.vue';
+import NoResult from '@/Components/Wizard/NoResult.vue';
 import { Head, useForm, router } from '@inertiajs/vue3'; 
 
 const props = defineProps({
@@ -44,7 +45,7 @@ function toggleHealthFlag(id) {
 
 <template>
     <WizardLayout>
-        <form @submit.prevent="submit" class="health-flags-form">
+        <form @submit.prevent="submit" class="health-flags-form" v-if="props.healthFlags.length">
             <div class="health-flags-form-checkbox" v-for="healthFlag in props.healthFlags">
                 <FormCheckbox
                     :key="healthFlag.id"
@@ -58,6 +59,9 @@ function toggleHealthFlag(id) {
             </div>
             <FormSubmit>Consultar</FormSubmit>
         </form>
+        <div class="health-flags-form" v-else>
+            <NoResult message="Encara no hi ha cap condició de salut per aquest tipus de cirurgia." />
+        </div>
     </WizardLayout>
 </template>
 
