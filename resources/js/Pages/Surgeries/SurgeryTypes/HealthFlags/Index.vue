@@ -38,7 +38,6 @@ function toggleHealthFlag(id) {
     } else {
         form.healthFlags.push(id);
     }
-    console.log(form.healthFlags);
 }
 
 </script>

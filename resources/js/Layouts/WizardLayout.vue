@@ -25,13 +25,22 @@ const params = requiredParams(pageProps);
         </div>
         <header class="wizard-layout-header">
             <div>
-                <Dropdown :routes="[{
-                label: 'Pàgina d\'inici',
-                route: 'dashboard',
-                method: 'get',
-                isAdmin: false,
-                isManager: false,
-                }]">
+                <Dropdown :routes="[
+                {
+                    label: 'Pàgina d\'inici',
+                    route: 'dashboard',
+                    method: 'get',
+                    isAdmin: false,
+                    isManager: false,
+                },
+                {
+                    label: 'Tancar sessió',
+                    route: 'logout',
+                    method: 'post',
+                    isAdmin: false,
+                    isManager: false,    
+                }
+                ]">
                 </Dropdown>
             </div>
             <div>

@@ -6,17 +6,26 @@ import FormInput from '@/Components/Form/FormInput.vue';
 import FormSubmit from '@/Components/Form/FormSubmit.vue';
 import FormColor from '@/Components/Form/FormColor.vue';
 import FormCheckbox from '@/Components/Form/FormCheckbox.vue';
+import FormCondition from '@/Components/Form/FormCondition.vue';
 
 const props = defineProps({
     surgeryId: {
-        type: Object,
-        default: () => ({})
+        type: String,
+        default: '0'
     },
     surgeryTypeId: {
+        type: String,
+        default: '0'
+    },
+    surgeryType: {
         type: Object,
         default: () => ({})
     },
-    surgeryType: {
+    surgery: {
+        type: Object,
+        default: () => ({})
+    },
+    antibiotics: {
         type: Object,
         default: () => ({})
     }
@@ -24,7 +33,7 @@ const props = defineProps({
 
 const form = useForm({
     name: '',
-    description: true
+    description: ''
 });
 
 const submit = () => {
@@ -35,25 +44,25 @@ const submit = () => {
 
 <template>
     <WizardLayout>
-        <form @submit.prevent="submit" class="create-surgery-type-form">
-            <h1 class="create-surgery-type-form-title">Creant una condició de salut per <span class="create-surgery-type-form-title-surgery-name">{{ surgeryType.name }}</span></h1>
+        <form @submit.prevent="submit" class="create-health-flag-form">
+            <h1 class="create-health-flag-form-title">Creant una condició de salut per
+                <span class="create-health-flag-form-title-surgery-name">{{ surgeryType.name }}</span>
+                de tipus <span class="create-health-flag-form-title-surgery-name">{{ surgery.name }}</span>.
+            </h1>
             <FormInput
                 v-model="form.name"
                 type="text"
-                placeholder="Nom del tipus de cirurgia"
-                icon="/assets/icons/bone-break.svg"
+                placeholder="Nom de la condició de salut"
+                icon="/assets/icons/pharmacy.svg"
                 id="name"
                 name="name"
                 autofocus
             />
-            <FormInput
-                v-model="form.name"
-                type="text"
-                placeholder="Nom del tipus de cirurgia"
-                icon="/assets/icons/bone-break.svg"
-                id="name"
-                name="name"
-                autofocus
+            {{ form.description }}
+            <FormCondition
+                v-model="form.description"
+                placeholder="Descripció de la condició de salut"
+                :antibiotics="antibiotics"
             />
             <FormSubmit>Crear condició de salut</FormSubmit>
         </form>
@@ -61,17 +70,17 @@ const submit = () => {
 </template>
 
 <style scoped>
-.create-surgery-type-form {
+.create-health-flag-form {
     background: none;
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
-.create-surgery-type-form-title {
+.create-health-flag-form-title {
     font-size: 1.5rem;
 }
 
-.create-surgery-type-form-title-surgery-name {
+.create-health-flag-form-title-surgery-name {
     text-transform: lowercase;
     font-weight: 600;
     color: #296fa8;

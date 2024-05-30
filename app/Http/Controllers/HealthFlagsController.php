@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 use App\Models\HealthFlag;
+use App\Models\SurgeryType;
+use App\Models\Surgery;
+use App\Models\Antibiotic;
 
 class HealthFlagsController extends Controller
 {
@@ -40,10 +43,14 @@ class HealthFlagsController extends Controller
     public function create(Request $request, string $surgeryId, string $typeId)
     {
         $surgeryType = SurgeryType::find($typeId);
+        $surgery = Surgery::find($surgeryId);
+        $antibiotics = Antibiotic::all(['id', 'name']);
         return Inertia::render('Surgeries/SurgeryTypes/HealthFlags/Create', [
             'surgeryId' => $surgeryId,
             'surgeryTypeId' => $typeId,
             'surgeryType' => $surgeryType,
+            'surgery' => $surgery,
+            'antibiotics' => $antibiotics,
         ]);
     }
 
