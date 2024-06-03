@@ -4,8 +4,6 @@ import { useForm } from '@inertiajs/vue3';
 import WizardLayout from '@/Layouts/WizardLayout.vue';
 import FormInput from '@/Components/Form/FormInput.vue';
 import FormSubmit from '@/Components/Form/FormSubmit.vue';
-import FormColor from '@/Components/Form/FormColor.vue';
-import FormCheckbox from '@/Components/Form/FormCheckbox.vue';
 import FormCondition from '@/Components/Form/FormCondition.vue';
 
 const props = defineProps({

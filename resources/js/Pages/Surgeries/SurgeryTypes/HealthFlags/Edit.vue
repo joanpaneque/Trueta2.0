@@ -1,6 +1,10 @@
 <script setup>
 import { defineProps } from 'vue';
 import WizardLayout from '@/Layouts/WizardLayout.vue';
+import { useForm } from '@inertiajs/vue3';
+import FormCondition from '@/Components/Form/FormCondition.vue';
+import FormInput from '@/Components/Form/FormInput.vue';
+import FormSubmit from '@/Components/Form/FormSubmit.vue';
 
 const props = defineProps({
     surgeryId: {
@@ -14,31 +18,46 @@ const props = defineProps({
     healthFlag: {
         type: Object,
         default: '0'
+    },
+    antibiotics: {
+        type: Object,
+        default: () => ({})
     }
 });
+
+const form = useForm({
+    name: props.healthFlag.name,
+    description: props.healthFlag.description
+});
+
+const submit = () => {
+    form.put(route('surgeries.types.flags.update', [props.surgeryId, props.surgeryTypeId, props.healthFlag.id]));
+};
+
 </script>
 
 <template>
     <WizardLayout>
         <form @submit.prevent="submit" class="edit-health-flag-form">
             <h1 class="edit-health-flag-form-title">Editar condició de salut</h1>
-            <!-- <FormInput
+            <FormInput
                 v-model="form.name"
-                type="text"
-                placeholder="Nom de la cirurgia"
-                icon="/assets/icons/bone-break.svg"
+                placeholder="Nom de la condició de salut"
+                icon="/assets/icons/pharmacy.svg"
                 id="name"
                 name="name"
                 autofocus
             />
-            <FormColor
-                v-model="form.color"
-                placeholder="Color de la cirurgia"
-                icon="/assets/icons/palette.svg"
-                id="color"
-                name="color"
+            <FormCondition
+                v-model="form.description"
+                placeholder="Descripció de la condició de salut"
+                icon="/assets/icons/health-flag.svg"
+                id="description"
+                name="description"
+                autofocus
+                :antibiotics="props.antibiotics"
             />
-            <FormSubmit>Crear cirurgia</FormSubmit> -->
+            <FormSubmit>Desar</FormSubmit>
         </form>
     </WizardLayout>
 </template>

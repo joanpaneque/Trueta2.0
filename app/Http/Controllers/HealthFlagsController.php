@@ -30,10 +30,18 @@ class HealthFlagsController extends Controller
         $requestedHealthFlags = $request->input('healthFlags');
         $healthFlags = HealthFlag::whereIn('id', $requestedHealthFlags)->get();
 
+        $antibiotics = Antibiotic::all(['id', 'name', 'description']);
+
+        $surgery = Surgery::find($surgeryId);
+        $surgeryType = SurgeryType::find($typeId);
+
         return Inertia::render('Surgeries/SurgeryTypes/HealthFlags/Results/Index', [
             'healthFlags' => $healthFlags,
             'surgeryId' => $surgeryId,
             'surgeryTypeId' => $typeId,
+            'antibiotics' => $antibiotics,
+            'surgery' => $surgery,
+            'surgeryType' => $surgeryType
         ]);
     }
 
@@ -57,9 +65,20 @@ class HealthFlagsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, string $surgeryId, string $typeId)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
+
+        HealthFlag::create([
+            'surgery_type_id' => $typeId,
+            'name' => $request->input('name'),
+            'description' => $request->input('description')
+        ]);
+
+        return redirect()->route('surgeries.types.flags.index', ['surgery' => $surgeryId, 'type' => $typeId]);
     }
 
     /**
@@ -76,19 +95,34 @@ class HealthFlagsController extends Controller
     public function edit(string $surgeryId, string $typeId, string $id)
     {
         $healthFlag = HealthFlag::findOrFail($id);
+
+        $antibiotics = Antibiotic::all(['id', 'name']);
+
         return Inertia::render('Surgeries/SurgeryTypes/HealthFlags/Edit', [
             'healthFlag' => $healthFlag,
             'surgeryId' => $surgeryId,
             'surgeryTypeId' => $typeId,
+            'antibiotics' => $antibiotics
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $surgeryId, string $typeId, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
+
+        $healthFlag = HealthFlag::findOrFail($id);
+        $healthFlag->update([
+            'name' => $request->input('name'),
+            'description' => $request->input('description')
+        ]);
+
+        return redirect()->route('surgeries.types.flags.index', ['surgery' => $surgeryId, 'type' => $typeId]);
     }
 
     /**

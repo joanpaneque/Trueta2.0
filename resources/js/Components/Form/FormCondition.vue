@@ -22,7 +22,17 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
-const initialModelValue = ref(props.modelValue);
+function encodeHTML(html) {
+    return html.replace(/{{(.*?)}}/g, (match, p1) => {
+        const antibiotic = props.antibiotics.find(antibiotic => antibiotic.id === parseInt(p1));
+        if (antibiotic) {
+            return `<span class="antibiotic" data-id="${antibiotic.id}">${antibiotic.name}</span>`;
+        }
+        return match;
+    }).replace(/\n/g, '<br>');
+}
+
+const initialModelValue = ref(encodeHTML(props.modelValue));
 
 const htmlRef = ref(null);
 
@@ -119,9 +129,11 @@ function handleSuggestionClick() {
     const hash = Math.random().toString(36).substring(7);
     content += ` <span class="antibiotic" data-id="${suggestedAntibiotic.value.id}" hash="${hash}">${suggestedAntibiotic.value.name}</span>&nbsp;`;
     htmlRef.value.innerHTML = content;
-    const antibiotic = htmlRef.value.querySelector(`[hash="${hash}"]`);
-    antibiotic.addEventListener('click', e => {
-        htmlRef.querySelector(`[hash="${hash}"]`).remove();
+    setTimeout(() => {
+        const antibiotic = htmlRef.value.querySelector(`[hash="${hash}"]`);
+        antibiotic.addEventListener('click', () => {
+            console.log("click");
+        });
     });
     setPosition(content.length);
     suggestedAntibiotic.value = null;
