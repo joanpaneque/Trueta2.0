@@ -73,7 +73,7 @@ const params = requiredParams(pageProps);
             <div>
                 <Breadcrumbs />
             </div>
-            <div>
+            <div v-if="user.is_admin || user.is_manager">
                 <div v-if="!editPageRoute">
                     <CreateButton v-if="isIndexPage" @click="router.get(route(createPageRoute, params))"></CreateButton>
                     <GoBackButton v-else></GoBackButton>

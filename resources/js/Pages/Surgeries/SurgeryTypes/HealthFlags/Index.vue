@@ -4,7 +4,7 @@ import WizardLayout from '@/Layouts/WizardLayout.vue';
 import FormCheckbox from '@/Components/Form/FormCheckbox.vue';
 import FormSubmit from '@/Components/Form/FormSubmit.vue';
 import NoResult from '@/Components/Wizard/NoResult.vue';
-import { Head, useForm, router } from '@inertiajs/vue3'; 
+import { Head, useForm, router, usePage } from '@inertiajs/vue3'; 
 
 const props = defineProps({
     healthFlags: {
@@ -48,19 +48,22 @@ function toggleHealthFlag(id) {
     }
 }
 
+const user = usePage().props.auth.user;
+
 </script>
 
 <template>
     <WizardLayout>
         <form @submit.prevent="submit" class="health-flags-form" v-if="props.healthFlags.length">
-            <div class="health-flags-form-checkbox" v-for="healthFlag in props.healthFlags">
+            <div class="health-flags-form-checkbox" v-for="healthFlag in props.healthFlags" :class="{ 'edit-disabled': !user.is_admin && !user.is_manager }">
                 <FormCheckbox
                     :key="healthFlag.id"
                     :id="healthFlag.id"
                     :name="healthFlag.name"
                     @input="toggleHealthFlag(healthFlag.id)"
                 />
-                <div class="health-flags-form-checkbox-edit" @click="router.get(route('surgeries.types.flags.edit', [props.surgeryId, props.surgeryTypeId, healthFlag.id]))">
+                <div v-if="user.is_admin || user.is_manager"
+                    class="health-flags-form-checkbox-edit" @click="router.get(route('surgeries.types.flags.edit', [props.surgeryId, props.surgeryTypeId, healthFlag.id]))">
                     <img src="/assets/icons/edit.svg" />
                 </div>
             </div>
@@ -96,5 +99,9 @@ function toggleHealthFlag(id) {
     .health-flags-form-checkbox-edit img {
         width: 25px;
         height: 25px;
+    }
+
+    .edit-disabled {
+        grid-template-columns: auto;
     }
 </style>

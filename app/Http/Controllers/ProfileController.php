@@ -42,6 +42,8 @@ class ProfileController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
             'password' => ['nullable', 'confirmed', 'min:8'],
+            'is_admin' => 'nullable|boolean',
+            'is_manager' => 'nullable|boolean'
         ]);
 
         $old_values = User::find($id);
@@ -52,6 +54,12 @@ class ProfileController extends Controller
             'email' => $request->email,
         ]);
 
+        if (auth()->user()->is_admin && auth()->id() != $id) {
+            $user->update([
+                'is_admin' => $request->is_admin,
+                'is_manager' => $request->is_manager
+            ]);
+        }
 
         AuditLog::create([
             'type' => 'update',

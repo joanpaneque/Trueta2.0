@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import FormInput from '@/Components/Form/FormInput.vue';
+import FormCheckbox from '@/Components/Form/FormCheckbox.vue';
 import FormSubmit from '@/Components/Form/FormSubmit.vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
 
@@ -24,7 +25,9 @@ const form = useForm({
     name: props.user.name,
     email: props.user.email,
     password: '',
-    password_confirmation: ''
+    password_confirmation: '',
+    is_admin: props.user.is_admin,
+    is_manager: props.user.is_manager,
 })
 
 const submit = () => {
@@ -72,6 +75,22 @@ const submit = () => {
                 id="password_confirmation"
                 name="password_confirmation"
             />
+            <div class="edit-profile-admin">
+                <FormCheckbox
+                    v-if="user.is_admin"
+                    v-model="form.is_manager"
+                    id="is_manager"
+                    name="Gestor"
+                    :disabled="user.id === props.user.id"
+                />
+                <FormCheckbox
+                    v-if="user.is_admin"
+                    v-model="form.is_admin"
+                    id="is_admin"
+                    name="Administrador"
+                    :disabled="user.id === props.user.id"
+                />
+            </div>
             <FormSubmit>Editar perfil</FormSubmit>
         </form>
     </AuthenticatedLayout>
@@ -85,5 +104,12 @@ const submit = () => {
 
 .edit-profile-form-title {
     font-size: 1.5rem;
+}
+
+.edit-profile-admin {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    width: 100%;
 }
 </style>

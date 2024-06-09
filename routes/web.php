@@ -17,6 +17,7 @@ use App\Http\Controllers\AuditLogsController;
 use App\Http\Controllers\UsersController;
 
 use App\Http\Middleware\UserRegistered;
+use App\Http\Middleware\CanEditProfile;
 
 
 Route::middleware(['auth', UserRegistered::class])->group(function () {
@@ -31,7 +32,9 @@ Route::middleware(['auth', UserRegistered::class])->group(function () {
     Route::resource('antibiotics', AntibioticsController::class);
     Route::get('/', [IndexController::class, 'index'])->name('index');
     Route::get('/surgeries', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('profile', ProfileController::class)->only(['edit', 'update', 'destroy']);
+    Route::middleware(CanEditProfile::class)->group(function () {
+        Route::resource('profile', ProfileController::class)->only(['edit', 'update', 'destroy']);
+    });
     Route::resource('audit-logs', AuditLogsController::class)->only(['index', 'show']);
     Route::resource('users', UsersController::class);
     Route::put('/users/{id}/register', [UsersController::class, 'register'])->name('users.register');

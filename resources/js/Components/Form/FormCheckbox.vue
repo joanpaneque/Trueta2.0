@@ -17,6 +17,10 @@ const props = defineProps({
     modelValue: {
         type: String,
         default: '0'
+    },
+    disabled: {
+        type: Boolean,
+        default: false
     }
 });
 
@@ -41,7 +45,7 @@ if (props.modelValue) {
 </script>
 
 <template>
-    <div class="input-container" @click="checked = !checked; updateInput(checked)">
+    <div class="input-container" @click="checked = !checked; updateInput(checked)" :class="{ 'input-container-disabled': disabled }">
         <input :id="id" :name="name" type="checkbox" v-model="checked" />
         <label :for="id" class="label">{{ name }}</label>
     </div>
@@ -72,5 +76,12 @@ if (props.modelValue) {
     label {
         pointer-events: none;
         user-select: none;
+    }
+
+    .input-container-disabled {
+        background: #f9f9f9;
+        color: #999;
+        opacity: 0.5;
+        pointer-events: none;
     }
 </style>
