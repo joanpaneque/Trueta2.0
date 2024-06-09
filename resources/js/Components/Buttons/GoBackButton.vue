@@ -4,10 +4,10 @@
     import { usePage, router } from '@inertiajs/vue3';
 
     const page = usePage().component;
-    const pageProps = usePage().props;
 
     const indexRoute = indexRoutePage(page);
-
+    const pageProps = usePage().props;
+    
     const params = requiredParams(pageProps);
 
     function goBack() {

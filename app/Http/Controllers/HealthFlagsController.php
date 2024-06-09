@@ -9,6 +9,7 @@ use App\Models\HealthFlag;
 use App\Models\SurgeryType;
 use App\Models\Surgery;
 use App\Models\Antibiotic;
+use App\Models\AuditLog;
 
 class HealthFlagsController extends Controller
 {
@@ -17,11 +18,27 @@ class HealthFlagsController extends Controller
      */
     public function index(string $surgeryId, string $typeId)
     {
+        $surgery = Surgery::find($surgeryId);
+        $surgeryType = SurgeryType::find($typeId);
+
+        if (!$surgeryType->prophylaxis) {
+            return redirect()->route('surgeries.types.show', ['surgery' => $surgeryId, 'type' => $typeId]);
+        }
+
         $healthFlags = HealthFlag::where('surgery_type_id', $typeId)->get(['id', 'name']);
+
+        // AuditLog::create([
+        //     'event' => 'Ha accedit a la llista de condicions de salut de la cirurgia ' . $surgery->name . ' - ' . $surgeryType->name,
+        //     'user' => auth()->user(),
+        //     'user_id' => auth()->id()
+        // ]);
+
         return Inertia::render('Surgeries/SurgeryTypes/HealthFlags/Index', [
             'healthFlags' => $healthFlags,
             'surgeryId' => $surgeryId,
             'surgeryTypeId' => $typeId,
+            'surgery' => $surgery,
+            'surgeryType' => $surgeryType
         ]);
     }
 
@@ -34,6 +51,12 @@ class HealthFlagsController extends Controller
 
         $surgery = Surgery::find($surgeryId);
         $surgeryType = SurgeryType::find($typeId);
+
+        // AuditLog::create([
+        //     'event' => 'Ha accedit als resultats de la cirurgia ' . $surgery->name . ' - ' . $surgeryType->name . ' amb les següents condicions de salut: ' . implode(', ', $healthFlags->pluck('name')->toArray()),
+        //     'user' => auth()->user(),
+        //     'user_id' => auth()->id()
+        // ]);
 
         return Inertia::render('Surgeries/SurgeryTypes/HealthFlags/Results/Index', [
             'healthFlags' => $healthFlags,
@@ -53,6 +76,13 @@ class HealthFlagsController extends Controller
         $surgeryType = SurgeryType::find($typeId);
         $surgery = Surgery::find($surgeryId);
         $antibiotics = Antibiotic::all(['id', 'name']);
+
+        // AuditLog::create([
+        //     'event' => 'Ha accedit a la creació d\'una nova condició de salut per a la cirurgia ' . $surgery->name . ' - ' . $surgeryType->name,
+        //     'user' => auth()->user(),
+        //     'user_id' => auth()->id()
+        // ]);
+
         return Inertia::render('Surgeries/SurgeryTypes/HealthFlags/Create', [
             'surgeryId' => $surgeryId,
             'surgeryTypeId' => $typeId,
@@ -78,6 +108,12 @@ class HealthFlagsController extends Controller
             'description' => $request->input('description')
         ]);
 
+        // AuditLog::create([
+        //     'event' => 'Ha creat una nova condició de salut per a la cirurgia ' . Surgery::find($surgeryId)->name . ' - ' . SurgeryType::find($typeId)->name . ' amb nom ' . $request->input('name') . ' i descripció ' . $request->input('description'),
+        //     'user' => auth()->user(),
+        //     'user_id' => auth()->id()
+        // ]);
+
         return redirect()->route('surgeries.types.flags.index', ['surgery' => $surgeryId, 'type' => $typeId]);
     }
 
@@ -98,11 +134,22 @@ class HealthFlagsController extends Controller
 
         $antibiotics = Antibiotic::all(['id', 'name']);
 
+        $surgery = Surgery::find($surgeryId);
+        $surgeryType = SurgeryType::find($typeId);
+
+        // AuditLog::create([
+        //     'event' => 'Ha accedit a l\'edició de la condició de salut ' . $healthFlag->name . ' de la cirurgia ' . $surgery->name . ' - ' . $surgeryType->name,
+        //     'user' => auth()->user(),
+        //     'user_id' => auth()->id()
+        // ]);
+
         return Inertia::render('Surgeries/SurgeryTypes/HealthFlags/Edit', [
             'healthFlag' => $healthFlag,
             'surgeryId' => $surgeryId,
             'surgeryTypeId' => $typeId,
-            'antibiotics' => $antibiotics
+            'antibiotics' => $antibiotics,
+            'surgery' => $surgery,
+            'surgeryType' => $surgeryType
         ]);
     }
 
@@ -117,10 +164,24 @@ class HealthFlagsController extends Controller
         ]);
 
         $healthFlag = HealthFlag::findOrFail($id);
+
+        $old_values = HealthFlag::findOrFail($id);
+        
         $healthFlag->update([
             'name' => $request->input('name'),
             'description' => $request->input('description')
         ]);
+
+        AuditLog::create([
+            'type' => 'update',
+            'description' => 'Ha actualitzat la condició de salut "' . $old_values->name . '" de la cirurgia ' . Surgery::find($surgeryId)->name . ' - ' . SurgeryType::find($typeId)->name,
+            'table_name' => 'health_flags',
+            'old_values' => json_encode($old_values->toArray()),
+            'new_values' => $healthFlag,
+            'user' => auth()->user(),
+            'user_id' => auth()->id()
+        ]);
+
 
         return redirect()->route('surgeries.types.flags.index', ['surgery' => $surgeryId, 'type' => $typeId]);
     }

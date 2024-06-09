@@ -49,7 +49,7 @@ const updateInput = (value) => {
 <template>
     <div class="input-container">
         <label :for="id" class="label" style="display: none;">Dummy</label>
-        <input :id="id" :name="name" required autofocus autocomplete="off" v-model="input"
+        <input :id="id" :name="name" autofocus autocomplete="off" v-model="input"
             @input="updateInput($event.target.value)" :placeholder="placeholder" :type="type" :autofocus="autofocus">
         <img :src="icon" alt="Icon" class="icon">
     </div>

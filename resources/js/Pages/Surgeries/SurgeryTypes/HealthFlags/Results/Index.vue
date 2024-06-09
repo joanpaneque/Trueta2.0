@@ -34,9 +34,9 @@ const props = defineProps({
 
 <template>
     <WizardLayout>
-        <h1 class="health-flag-results-title">Mostrant els resultats seleccionats de la cirurgia
+        <h1 class="health-flag-results-title">Mostrant els resultats seleccionats del tipus de cirurgia
             <span class="health-flag-results-title-surgery-name">{{ surgeryType.name }}</span>
-            de tipus <span class="health-flag-results-title-surgery-name">{{ surgery.name }}</span>.
+            de la branca <span class="health-flag-results-title-surgery-name">{{ surgery.name }}</span>.
         </h1>
         <div v-for="healthFlag in props.healthFlags" :key="healthFlag.id">
             <h1 class="health-flag-result-title">{{ healthFlag.name }}</h1>

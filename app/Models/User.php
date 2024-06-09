@@ -20,6 +20,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
+        'is_manager',
+        'registered',
+        'deactivated',
+        'request'
     ];
 
     /**
@@ -43,5 +48,21 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function register()
+    {
+        $this->registered = true;
+        $this->deactivated = false;
+        $this->request = false;
+        $this->save();
+    }
+
+    public function deactivate()
+    {
+        $this->deactivated = true;
+        $this->registered = false;
+        $this->request = false;
+        $this->save();
     }
 }

@@ -18,7 +18,15 @@ const props = defineProps({
     surgeryTypeId: {
         type: String,
         default: '0'
-    }
+    },
+    surgery: {
+        type: Object,
+        default: () => ({})
+    },
+    surgeryType: {
+        type: Object,
+        default: () => ({})
+    },
 });
 
 const form = useForm({

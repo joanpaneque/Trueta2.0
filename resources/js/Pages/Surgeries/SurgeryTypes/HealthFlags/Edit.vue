@@ -22,6 +22,14 @@ const props = defineProps({
     antibiotics: {
         type: Object,
         default: () => ({})
+    },
+    surgery: {
+        type: Object,
+        default: () => ({})
+    },
+    surgeryType: {
+        type: Object,
+        default: () => ({})
     }
 });
 
@@ -39,7 +47,7 @@ const submit = () => {
 <template>
     <WizardLayout>
         <form @submit.prevent="submit" class="edit-health-flag-form">
-            <h1 class="edit-health-flag-form-title">Editar condició de salut</h1>
+            <h1 class="edit-health-flag-form-title">Editant la condició de salut <span class="edit-health-flag-form-title-surgery-name ">{{ props.healthFlag.name }}</span> per la cirurgia de tipus <span class="edit-health-flag-form-title-surgery-name">{{ props.surgeryType.name }}</span> de la branca <span class="edit-health-flag-form-title-surgery-name">{{ props.surgery.name }}</span></h1>
             <FormInput
                 v-model="form.name"
                 placeholder="Nom de la condició de salut"
@@ -63,6 +71,18 @@ const submit = () => {
 </template>
 
 <style scoped>
+
+.edit-health-flag-form-title {
+    font-size: 1.5rem;
+}
+
+.edit-health-flag-form-title-surgery-name {
+    text-transform: lowercase;
+    font-weight: 600;
+    color: #296fa8;
+}
+
+
 .edit-health-flag-form {
     background: none;
     display: flex;

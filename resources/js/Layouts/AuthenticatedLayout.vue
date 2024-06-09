@@ -3,6 +3,9 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown/Dropdown.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue';
 import CreateButton from '@/Components/Buttons/CreateButton.vue';
+import { usePage } from '@inertiajs/vue3';
+
+const user = usePage().props.auth.user;
 
 </script>
 
@@ -13,13 +16,44 @@ import CreateButton from '@/Components/Buttons/CreateButton.vue';
         </div>
         <header class="authenticated-layout-header">
             <div>
-                <Dropdown :routes="[{
-                label: 'Pàgina d\'inici',
-                route: 'dashboard',
-                method: 'get',
-                isAdmin: false,
-                isManager: false,
-                }]">
+                <Dropdown :routes="[
+                {
+                    label: 'Pàgina d\'inici',
+                    route: 'dashboard',
+                    method: 'get',
+                    isAdmin: false,
+                    isManager: false,
+                },
+                {
+                    label: 'Altes, baixes i sol·licituds',
+                    route: 'users.index',
+                    method: 'get',
+                    isAdmin: true,
+                    isManager: false,
+                },
+                {
+                    label: 'Registres d\'auditoria',
+                    route: 'audit-logs.index',
+                    method: 'get',
+                    isAdmin: true,
+                    isManager: true,
+                },
+                {
+                    label: 'Perfil',
+                    route: 'profile.edit',
+                    params: { profile: user.id },
+                    method: 'get',
+                    isAdmin: false,
+                    isManager: false,
+                },
+                {
+                    label: 'Tancar sessió',
+                    route: 'logout',
+                    method: 'post',
+                    isAdmin: false,
+                    isManager: false,    
+                }
+                ]">
                 </Dropdown>
             </div>
         </header>
@@ -33,7 +67,7 @@ import CreateButton from '@/Components/Buttons/CreateButton.vue';
 <style scoped>
 .authenticated-layout-container {
     display: grid;
-    gap: 30px;
+    gap: 15px;
     padding: 30px;
 }
 

@@ -15,8 +15,8 @@ const props = defineProps({
         default: false
     },
     modelValue: {
-        type: Boolean,
-        default: false
+        type: String,
+        default: '0'
     }
 });
 
@@ -27,12 +27,17 @@ const input = ref(props.modelValue);
 const updateInput = (value) => {
     input.value = value;
     emits('input', value);
-    emits('update:modelValue', value);
+    emits('update:modelValue', value === true ? '1' : '0');
 };
 
-const checked = ref(props.modelValue || props.value);
 
+const checked = ref(true);
 
+if (props.modelValue) {
+    checked.value = props.modelValue == '1' ? true : false;
+} else {
+    checked.value = props.value;
+}
 </script>
 
 <template>

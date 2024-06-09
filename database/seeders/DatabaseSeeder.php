@@ -23,7 +23,14 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@trueta.cat',
+            'is_admin' => true,
+            'is_manager' => true,
+            'registered' => true,
+            'deactivated' => false,
+            'request' => false
         ]);
+
+        User::factory(20)->create();
 
         Surgery::create([
             'name' => 'CARDÍACA',

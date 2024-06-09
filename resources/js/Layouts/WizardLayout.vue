@@ -6,13 +6,18 @@ import Dropdown from '@/Components/Dropdown/Dropdown.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue';
 import CreateButton from '@/Components/Buttons/CreateButton.vue';
 import GoBackButton from '@/Components/Buttons/GoBackButton.vue';
-import { isIndex, createRoute, requiredParams } from '@/Helpers/indexer';
+import EditButton from '@/Components/Buttons/EditButton.vue';
+import { isIndex, createRoute, requiredParams, editRoute } from '@/Helpers/indexer';
 
 const page = usePage().component;
 const pageProps = usePage().props;
 
+const user = pageProps.auth.user;
+
+
 const isIndexPage = isIndex(page);
 const createPageRoute = createRoute(page);
+const editPageRoute = editRoute(page);
 const params = requiredParams(pageProps);
 
 
@@ -34,6 +39,28 @@ const params = requiredParams(pageProps);
                     isManager: false,
                 },
                 {
+                    label: 'Altes, baixes i sol·licituds',
+                    route: 'users.index',
+                    method: 'get',
+                    isAdmin: true,
+                    isManager: false,
+                },
+                {
+                    label: 'Registres d\'auditoria',
+                    route: 'audit-logs.index',
+                    method: 'get',
+                    isAdmin: true,
+                    isManager: true,
+                },
+                {
+                    label: 'Perfil',
+                    route: 'profile.edit',
+                    params: { profile: user.id },
+                    method: 'get',
+                    isAdmin: false,
+                    isManager: false,
+                },
+                {
                     label: 'Tancar sessió',
                     route: 'logout',
                     method: 'post',
@@ -47,8 +74,15 @@ const params = requiredParams(pageProps);
                 <Breadcrumbs />
             </div>
             <div>
-                <CreateButton v-if="isIndexPage" @click="router.get(route(createPageRoute, params))"></CreateButton>
-                <GoBackButton v-else></GoBackButton>
+                <div v-if="!editPageRoute">
+                    <CreateButton v-if="isIndexPage" @click="router.get(route(createPageRoute, params))"></CreateButton>
+                    <GoBackButton v-else></GoBackButton>
+                </div>
+                <div v-else class="wizard-layout-button-group">
+                    <CreateButton v-if="isIndexPage" @click="router.get(route(createPageRoute, params))"></CreateButton>
+                    <GoBackButton v-else></GoBackButton>
+                    <EditButton @click="router.get(route(editPageRoute, params))"></EditButton>
+                </div>
             </div>
         </header>
         <nav class="wizard-layout-aside"></nav>
@@ -83,19 +117,9 @@ const params = requiredParams(pageProps);
     gap: 15px;
 }
 
-/* .wizard-layout-logo {
-        grid-area: logo;
-    }
-
-    .wizard-layout-header {
-        grid-area: header;
-    }
-
-    .wizard-layout-aside {
-        grid-area: aside;
-    }
-
-    .wizard-layout-main {
-        grid-area: main;
-    } */
+.wizard-layout-button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 </style>

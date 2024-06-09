@@ -56,7 +56,6 @@ const submit = () => {
                 name="name"
                 autofocus
             />
-            {{ form.description }}
             <FormCondition
                 v-model="form.description"
                 placeholder="Descripció de la condició de salut"
