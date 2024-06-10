@@ -54,7 +54,8 @@ jobs:
           last_ssh: |
             cd ${{ secrets.SSH_DIR }} 
             tar -xzf app.tgz
-            ls -la
+            composer install --optimize-autoloader --no-dev
+            npm install --production
             cp env.example .env
             sed -i "s/DB_CONNECTION=.*/DB_CONNECTION=${{ secrets.DB_CONNECTION }}/" .env
             sed -i "s/DB_HOST=.*/DB_HOST=${{ secrets.DB_HOST }}/" .env
