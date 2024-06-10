@@ -39,7 +39,7 @@ const params = requiredParams(pageProps);
                     isManager: false,
                 },
                 {
-                    label: 'Altes, baixes i sol·licituds',
+                    label: 'Control d\'usuaris',
                     route: 'users.index',
                     method: 'get',
                     isAdmin: true,

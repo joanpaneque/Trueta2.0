@@ -25,7 +25,7 @@ const user = usePage().props.auth.user;
                     isManager: false,
                 },
                 {
-                    label: 'Altes, baixes i sol·licituds',
+                    label: 'Control d\'usuaris',
                     route: 'users.index',
                     method: 'get',
                     isAdmin: true,
