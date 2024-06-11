@@ -7,7 +7,6 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 
 const form = useForm({
     name: '',
-    surnames: '',
     email: '',
     password: '',
     password_confirmation: '',
@@ -29,12 +28,6 @@ const submit = () => {
                 v-model="form.name"
                 type="text"
                 placeholder="Nom"
-                icon="/assets/icons/id-card-clip-alt.svg"
-            />
-            <FormInput
-                v-model="form.surnames"
-                type="text"
-                placeholder="Cognoms"
                 icon="/assets/icons/id-card-clip-alt.svg"
             />
             <FormInput
