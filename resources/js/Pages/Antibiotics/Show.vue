@@ -15,7 +15,7 @@ const props = defineProps({
 })
 
 const formatDescription = (description) => {
-    return description.replace(/\n/g, '<br>');
+    return description?.replace(/\n/g, '<br>');
 }
 </script>
 
