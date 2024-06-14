@@ -76,5 +76,3 @@ jobs:
             chmod -R 775 bootstrap/cache
             chown -R www-data:www-data bootstrap/cache
             php artisan optimize:clear
-            php artisan migrate:refresh --force
-            php artisan db:seed --force
