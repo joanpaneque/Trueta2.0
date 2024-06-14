@@ -1,6 +1,7 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { defineProps } from 'vue';
+import { Head, useForm } from '@inertiajs/vue3';
 import FormInput from '@/Components/Form/FormInput.vue';
 import FormSubmit from '@/Components/Form/FormSubmit.vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
@@ -17,6 +18,14 @@ const submit = () => {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
 };
+
+const props = defineProps({
+    status: {
+        type: String,
+        default: '',
+    }
+});
+
 </script>
 
 <template>
@@ -24,6 +33,7 @@ const submit = () => {
         <Head title="Registre" />
         <form @submit.prevent="submit" class="register-form">
             <ApplicationLogo class="logo" />
+            <div v-if="props.status" class="status-message">{{ props.status }}</div>
             <FormInput
                 v-model="form.name"
                 type="text"
@@ -67,5 +77,12 @@ const submit = () => {
         width: 100%;
         display: block;
         margin-bottom: 20px;
+    }
+
+    .status-message {
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
     }
 </style>

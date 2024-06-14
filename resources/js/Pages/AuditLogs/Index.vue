@@ -32,6 +32,8 @@ console.log(props.auditLogs);
             <div class="audit-log" v-for="auditLog in props.auditLogs.data" @click="router.get(route('audit-logs.show', auditLog.id))">
                 <span class="audit-log-type">
                     <img v-if="auditLog.type === 'update'" src="/assets/icons/refresh.svg" alt="updated">
+                    <img v-if="auditLog.type === 'delete'" src="/assets/icons/trash.svg" alt="updated">
+                    <img v-if="auditLog.type === 'create'" src="/assets/icons/add.svg" alt="updated">
                 </span>
                 <span class="audit-log-user">
                     {{ JSON.parse(auditLog.user).name }}

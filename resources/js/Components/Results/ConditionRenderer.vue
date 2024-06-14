@@ -1,5 +1,6 @@
 <script setup>
 import { ref, defineProps, onMounted, onUnmounted } from 'vue';
+import { router } from '@inertiajs/vue3';
 
 const props = defineProps({
     html: {
@@ -31,8 +32,7 @@ const encodedHTML = ref(encodeHTML(props.html));
 onMounted(() => {
     htmlRef.value.querySelectorAll('.antibiotic-render').forEach((element) => {
         element.addEventListener('click', () => {
-            const antibioticId = element.getAttribute('data-id');
-            selectedAntibiotic.value = props.antibiotics.find(antibiotic => antibiotic.id === parseInt(antibioticId));
+            router.get(route('antibiotics.show', element.getAttribute('data-id')));
         });
     });
 });

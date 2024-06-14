@@ -4,7 +4,7 @@ import WizardLayout from '@/Layouts/WizardLayout.vue';
 import FormCheckbox from '@/Components/Form/FormCheckbox.vue';
 import FormSubmit from '@/Components/Form/FormSubmit.vue';
 import NoResult from '@/Components/Wizard/NoResult.vue';
-import { Head, useForm, router, usePage } from '@inertiajs/vue3'; 
+import { useForm, router, usePage } from '@inertiajs/vue3'; 
 
 const props = defineProps({
     healthFlags: {

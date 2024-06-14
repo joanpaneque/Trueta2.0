@@ -34,14 +34,28 @@
             <div class="audit-log-content">
                 <h1>L'usuari:</h1>
                 <p v-html="auditLog.user.replaceAll(',','<br>')" class="json"></p>
-                <h1>Ha realitzat l'acció:</h1>
+                <h1>Descripció:</h1>
                 <p class="json blue">{{ auditLog.description }}</p>
+                <h1>Acció:</h1>
+                <p class="json blue">{{ auditLog.type }}</p>
+                <h1>Taula:</h1>
+                <p class="json blue">{{ auditLog.table_name }}</p>
                 <h1>Data i hora:</h1>
                 <p class="json blue">{{ parseDate(auditLog.created_at) }}</p>
+                <div v-if="auditLog.type === 'update'">
                 <h1>Dades originals</h1>
                 <p v-html="auditLog.old_values.replaceAll(',','<br>').replaceAll('\\n','<br>')" class="json"></p>
                 <h1>Dades canviades</h1>
                 <p v-html="auditLog.new_values.replaceAll(',','<br>').replaceAll('\\n','<br>')" class="json"></p>
+                </div>
+                <div v-if="auditLog.type === 'delete'">
+                    <h1>Contingut eliminat</h1>
+                    <p v-html="auditLog.old_values.replaceAll(',','<br>').replaceAll('\\n','<br>')" class="json"></p>
+                </div>
+                <div v-if="auditLog.type === 'create'">
+                    <h1>Contingut creat</h1>
+                    <p v-html="auditLog.new_values.replaceAll(',','<br>').replaceAll('\\n','<br>')" class="json"></p>
+                </div>
             </div>
         </div>
 </AuthenticatedLayout>

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('registered')->default(false);
             $table->boolean('deactivated')->default(false);
             $table->boolean('request')->default(true);
+
             $table->timestamps();
         });
 

@@ -43,7 +43,6 @@ onUnmounted(() => {
         </button>
         <div v-show="isDropdownUnfolded" class="dropdown-options">
             <div v-for="dropdownRoute in routes">
-
                 <DropdownLink class="dropdown-link" :href="route(dropdownRoute.route, dropdownRoute.params)"
                     :method="dropdownRoute.method ?? 'GET'" as="button" v-if="
                     (dropdownRoute.isAdmin && user.is_admin) || (dropdownRoute.isManager && user.is_manager) || (!dropdownRoute.isAdmin && !dropdownRoute.isManager)

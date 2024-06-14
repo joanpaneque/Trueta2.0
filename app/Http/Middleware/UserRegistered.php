@@ -24,7 +24,19 @@ class UserRegistered
             return $next($request);
         }
 
-        Auth::logout();
+
+        if ($user) {
+            if ($user->request) {
+                $request->session()->flash('status', 'Hem rebut la teva sol·licitud d\'alta. Estàs en procés de validació.');
+            }
+
+            if ($user->deactivated) {
+                $request->session()->flash('status', 'El teu compte ha estat donat de baixa. Si creus que això és un error, contacta amb l\'administrador.');
+            }
+
+            Auth::logout();
+        }
+
         return redirect()->route('login');
     }
 }

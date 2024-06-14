@@ -37,7 +37,6 @@ const submit = () => {
 
 <template>
     <Head title="Profile" />
-
     <AuthenticatedLayout>
         <form @submit.prevent="submit" class="edit-profile-form">
             <h1 class="edit-profile-form-title">Editant perfil</h1>

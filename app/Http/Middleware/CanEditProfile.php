@@ -18,7 +18,7 @@ class CanEditProfile
         $id = $request->route('profile');
         $user = auth()->user();
 
-        if ($id != $user->id && !$user->is_admin) {
+        if ($id != $user->id && !$user->is_admin) { 
             return redirect()->route('dashboard');
         }
 

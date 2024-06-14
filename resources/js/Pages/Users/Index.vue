@@ -2,6 +2,7 @@
 import { defineProps, ref, computed } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { router, usePage } from '@inertiajs/vue3';
+import CustomModal from '@/Components/CustomModal.vue';
 
 const props = defineProps({
     userRequests: {
@@ -42,9 +43,28 @@ const filteredUserDeactivations = computed(() => {
 const filteredUserRequests = computed(() => {
     return props.userRequests.filter(filterWithQuery);
 });
+
+const isOpen = ref(false);
+const userToDeactivate = ref(null);
+
+function deactivateUser(user) {
+    userToDeactivate.value = user;
+    isOpen.value = true;
+}
+
+function performUserDeactivation() {
+    router.put(route('users.deactivate', userToDeactivate.value.id));
+    isOpen.value = false;
+}
+
 </script>
 
 <template>
+    <CustomModal v-model="isOpen" @close="isOpen = false" @accept="performUserDeactivation">
+        <div class="deactivate-user-modal-alert-text">
+            Estàs segur que vols donar de baixa l'usuari <span class="text-red-500">{{ userToDeactivate.email }}</span>?
+        </div>
+    </CustomModal>
     <AuthenticatedLayout>
         <div class="profile-index-container">
             <div class="profile-index-tab-selector">
@@ -85,7 +105,7 @@ const filteredUserRequests = computed(() => {
                         <div class="profile-index-tab-content-row" v-for="userRegistration in filteredUserRegistrations" :key="userRegistration.email">
                             <span>{{ userRegistration.email }}</span>
                             <span class="profile-index-tab-content-row-actions">
-                                <button @click="router.put(route('users.deactivate', userRegistration.id))" v-if="userRegistration.id !== user.id" class="red-button">
+                                <button @click="deactivateUser(userRegistration)" v-if="userRegistration.id !== user.id" class="red-button">
                                     <img src="/assets/icons/arrow-small-down.svg" alt="Acceptar">
                                 </button>
                                 <button @click="router.get(route('profile.edit', userRegistration.id))">
@@ -307,5 +327,10 @@ const filteredUserRequests = computed(() => {
     width: 27px;
     height: 27px;
     filter: invert(1);
+}
+
+.deactivate-user-modal-alert-text {
+    font-size: 1.5rem;
+
 }
 </style>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 use App\Models\Surgery;
+use App\Models\SurgeryType;
 use App\Models\AuditLog;
 
 class SurgeriesController extends Controller
@@ -60,9 +61,14 @@ class SurgeriesController extends Controller
         //     'user_id' => auth()->id()
         // ]);
 
+        $surgeries = Surgery::all();
+        $surgeryTypes = SurgeryType::where('surgery_id', $id)->get();
+
         return Inertia::render('Surgeries/Edit', [
             'surgery' => $surgery,
             'surgeryId' => $id,
+            'surgeries' => $surgeries,
+            'surgeryTypes' => $surgeryTypes
         ]);
     }
 
@@ -94,6 +100,22 @@ class SurgeriesController extends Controller
 
     public function destroy(string $id)
     {
-        //
+        $surgery = Surgery::where('id', $id)->first();
+
+        $old_values = $surgery->toArray();
+
+        $surgery->delete();
+
+        AuditLog::create([
+            'type' => 'delete',
+            'description' => 'Ha eliminat la cirurgia "' . $surgery->name . '"',
+            'table_name' => 'surgeries',
+            'old_values' => json_encode($old_values),
+            'new_values' => null,
+            'user' => auth()->user(),
+            'user_id' => auth()->id()
+        ]);
+
+        return redirect()->route('dashboard');
     }
 }

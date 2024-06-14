@@ -21,7 +21,6 @@
 <template>
     <div class="edit-button-container">
         <img src="/assets/icons/edit.svg" alt="Edit" />
-        
         <span class="edit-button-text">{{ editReferences[pageId] }} <span class="surgery-name">{{text}}</span></span>
     </div>
 </template>
@@ -46,14 +45,16 @@
         background: #1f4e7a;
         cursor: pointer;
     }
-    .surgery-name {
-        text-transform: lowercase;
-    }
     .edit-button-container span.edit-button-text {
         color: white;
         font-size: 1.2rem;
         margin-left: 10px;
     }
+    
+    .surgery-name {
+        text-transform: lowercase;
+    }
+
 
 
 </style>

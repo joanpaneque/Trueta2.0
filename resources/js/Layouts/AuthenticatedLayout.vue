@@ -25,6 +25,13 @@ const user = usePage().props.auth.user;
                     isManager: false,
                 },
                 {
+                    label: 'Administració d\'antibiòtics',
+                    route: 'antibiotics.index',
+                    method: 'get',
+                    isAdmin: false,
+                    isManager: true,
+                },
+                {
                     label: 'Control d\'usuaris',
                     route: 'users.index',
                     method: 'get',
@@ -42,6 +49,13 @@ const user = usePage().props.auth.user;
                     label: 'Perfil',
                     route: 'profile.edit',
                     params: { profile: user.id },
+                    method: 'get',
+                    isAdmin: false,
+                    isManager: false,
+                },
+                {
+                    label: 'Documentació',
+                    route: 'documentation',
                     method: 'get',
                     isAdmin: false,
                     isManager: false,

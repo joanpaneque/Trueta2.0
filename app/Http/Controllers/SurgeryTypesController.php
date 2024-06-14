@@ -21,9 +21,13 @@ class SurgeryTypesController extends Controller
             ->where('prophylaxis', false)
             ->get();
 
+
+        $surgeryTypes = SurgeryType::where('surgery_id', $surgeryId)->get();
+
         $color = Surgery::find($surgeryId)->color;
         $surgery = Surgery::find($surgeryId);
         $surgeryType = SurgeryType::find($surgeryId);
+        $surgeries = Surgery::all();
 
         // AuditLog::create([
         //     'event' => 'Ha accedit al llistat de tipus de cirurgies',
@@ -37,22 +41,23 @@ class SurgeryTypesController extends Controller
             'surgeryId' => $surgeryId,
             'color' => $color,
             'surgery' => $surgery,
-            'surgeryType' => $surgeryType
+            'surgeryType' => $surgeryType,
+            'surgeries' => $surgeries,
+            'surgeryTypes' => $surgeryTypes
         ]);
     }
 
     public function create(Request $request, string $surgeryId)
     {
 
-        // AuditLog::create([
-        //     'event' => 'Ha accedit a la pàgina de creació de tipus de cirurgies',
-        //     'user' => auth()->user(),
-        //     'user_id' => auth()->id()
-        // ]);
+        $surgeries = Surgery::all();
+        $surgeryTypes = SurgeryType::where('surgery_id', $surgeryId)->get();
 
         return Inertia::render('Surgeries/SurgeryTypes/Create', [
             'surgeryId' => $surgeryId,
             'surgery' => Surgery::find($surgeryId),
+            'surgeries' => $surgeries,
+            'surgeryTypes' => $surgeryTypes
         ]);
     }
 
@@ -84,17 +89,16 @@ class SurgeryTypesController extends Controller
         $surgery = Surgery::find($surgeryId);
         $surgeryType = SurgeryType::find($surgeryTypeId);
 
-        // AuditLog::create([
-        //     'event' => 'Ha accedit a la pàgina de detall del tipus de cirurgia ' . $surgeryType->name . ', pero la profilaxi estava desactivada.',
-        //     'user' => auth()->user(),
-        //     'user_id' => auth()->id()
-        // ]);
+        $surgeries = Surgery::all();
+        $surgeryTypes = SurgeryType::where('surgery_id', $surgeryId)->get();
 
         return Inertia::render('Surgeries/SurgeryTypes/Show', [
             'surgery' => $surgery,
             'surgeryId' => $surgeryId,
             'surgeryType' => $surgeryType,
-            'surgeryTypeId' => $surgeryTypeId
+            'surgeryTypeId' => $surgeryTypeId,
+            'surgeries' => $surgeries,
+            'surgeryTypes' => $surgeryTypes
         ]);
     }
 
@@ -102,16 +106,15 @@ class SurgeryTypesController extends Controller
     {
         $surgeryType = SurgeryType::find($id);
 
-        // AuditLog::create([
-        //     'event' => 'Ha accedit a la pàgina d\'edició del tipus de cirurgia ' . $surgeryType->name,
-        //     'user' => auth()->user(),
-        //     'user_id' => auth()->id()
-        // ]);
+        $surgeries = Surgery::all();
+        $surgeryTypes = SurgeryType::where('surgery_id', $surgeryId)->get();
 
         return Inertia::render('Surgeries/SurgeryTypes/Edit', [
             'surgeryType' => $surgeryType,
             'surgeryTypeId' => $id,
             'surgeryId' => $surgeryId,
+            'surgeries' => $surgeries,
+            'surgeryTypes' => $surgeryTypes
         ]);
     }
 
@@ -150,6 +153,22 @@ class SurgeryTypesController extends Controller
 
     public function destroy(string $id)
     {
-        //
+        $surgeryType = SurgeryType::where('id', $id)->first();
+
+        $old_values = $surgeryType;
+
+        $surgeryType->delete();
+
+        AuditLog::create([
+            'type' => 'delete',
+            'description' => 'Ha eliminat el tipus de cirurgia "' . $surgeryType->name . '"',
+            'table_name' => 'surgery_types',
+            'old_values' => json_encode($old_values),
+            'new_values' => null,
+            'user' => auth()->user(),
+            'user_id' => auth()->id()
+        ]);
+
+        return redirect()->route('surgeries.types.index', ['surgery' => $surgeryType->surgery_id]);
     }
 }

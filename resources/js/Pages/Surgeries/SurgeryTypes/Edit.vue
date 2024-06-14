@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { indexRoutePage, requiredParams } from '@/Helpers/indexer';
 import WizardLayout from '@/Layouts/WizardLayout.vue';
@@ -7,6 +7,8 @@ import FormInput from '@/Components/Form/FormInput.vue';
 import FormSubmit from '@/Components/Form/FormSubmit.vue';
 import FormColor from '@/Components/Form/FormColor.vue';
 import FormCheckbox from '@/Components/Form/FormCheckbox.vue';
+import CustomModal from '@/Components/CustomModal.vue';
+import DeleteButton from '@/Components/Buttons/DeleteButton.vue';
 
 const props = defineProps({
     surgery: {
@@ -27,6 +29,8 @@ const props = defineProps({
     }
 });
 
+const isOpen = ref(false);
+
 const params = requiredParams(props);
 
 
@@ -39,12 +43,22 @@ const submit = () => {
     form.put(route('surgeries.types.update', params));
 };
 
+const deleteSurgery = () => {
+    form.delete(route('surgeries.types.destroy', [props.surgeryType.id, props.surgeryType.id]));
+};
+
 </script>
 
 <template>
+    <CustomModal v-model="isOpen" @close="isOpen = false" @accept="deleteSurgery">
+        <div class="edit-surgery-type-modal-alert-text">
+            Estàs segur que vols eliminar el tipus de cirurgia <span class="text-red-500">{{ surgeryType.name }}</span>?
+        </div>
+    </CustomModal>
     <WizardLayout>
+        <DeleteButton class="mb-4" @click="isOpen = true" />
         <form @submit.prevent="submit" class="edit-surgery-type-form">
-            <h1 class="edit-surgery-type-form-title">Editant tipus de cirurgia <span class="edit-surgery-type-form-title-surgery-name">{{ surgeryType.name }}</span></h1>
+            <h1 class="edit-surgery-type-form-title">Editant tipus de cirurgia <span class="lowercase">{{ surgeryType.name }}</span></h1>
             <FormInput
                 v-model="form.name"
                 type="text"
@@ -86,6 +100,10 @@ const submit = () => {
     text-transform: lowercase;
     font-weight: 600;
     color: #296fa8;
+}
+
+.edit-surgery-type-modal-alert-text {
+    font-size: 1.5rem;
 }
 
 </style>

@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 
+use Inertia\Inertia;
+
 use App\Http\Controllers\SurgeriesController;
 use App\Http\Controllers\SurgeryTypesController;
 
@@ -22,7 +24,6 @@ use App\Http\Middleware\CanEditProfile;
 use App\Http\Middleware\IsManager;
 use App\Http\Middleware\IsAdmin;
 
-
 Route::middleware(['auth', UserRegistered::class])->group(function () {
     Route::get('/surgeries/{surgery}/types/{type}/flags/results', [HealthFlagsController::class, 'results'])->name('surgeries.types.flags.results');
     Route::resources([
@@ -32,7 +33,6 @@ Route::middleware(['auth', UserRegistered::class])->group(function () {
         'surgeries.types.results' => HealthFlagsController::class,
     ]);
 
-    Route::resource('antibiotics', AntibioticsController::class);
     Route::get('/', [IndexController::class, 'index'])->name('index');
     Route::get('/surgeries', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -44,7 +44,7 @@ Route::middleware(['auth', UserRegistered::class])->group(function () {
         Route::resource('surgeries', SurgeriesController::class)->only(['edit', 'update', 'create', 'destroy']);
         Route::resource('surgeries.types', SurgeryTypesController::class)->only(['edit', 'update', 'create', 'destroy']);
         Route::resource('surgeries.types.flags', HealthFlagsController::class)->only(['edit', 'update', 'create', 'destroy']);
-        Route::resource('antibiotics', AntibioticsController::class)->only(['edit', 'update', 'create', 'destroy']);
+        Route::resource('antibiotics', AntibioticsController::class);
         Route::resource('audit-logs', AuditLogsController::class)->only(['index', 'show']);
     });
 
@@ -53,5 +53,10 @@ Route::middleware(['auth', UserRegistered::class])->group(function () {
         Route::put('/users/{id}/register', [UsersController::class, 'register'])->name('users.register');
         Route::put('/users/{id}/deactivate', [UsersController::class, 'deactivate'])->name('users.deactivate');
     });
+
+    Route::get('/documentation', function () {
+        return Inertia::render('Documentation/Index');
+    })->name('documentation');
 });
+
 require __DIR__.'/auth.php';

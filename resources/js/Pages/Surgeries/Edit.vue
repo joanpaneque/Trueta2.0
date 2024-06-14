@@ -1,10 +1,12 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import WizardLayout from '@/Layouts/WizardLayout.vue';
 import FormInput from '@/Components/Form/FormInput.vue';
 import FormSubmit from '@/Components/Form/FormSubmit.vue';
 import FormColor from '@/Components/Form/FormColor.vue';
+import DeleteButton from '@/Components/Buttons/DeleteButton.vue';
+import CustomModal from '@/Components/CustomModal.vue';
 
 const props = defineProps({
     surgery: {
@@ -26,10 +28,22 @@ const submit = () => {
     form.put(route('surgeries.update', props.surgery.id));
 };
 
+const deleteSurgery = () => {
+    form.delete(route('surgeries.destroy', props.surgery.id));
+};
+
+const isOpen = ref(false);
+
 </script>
 
 <template>
+    <CustomModal v-model="isOpen" @close="isOpen = false" @accept="deleteSurgery">
+        <div class="edit-surgery-modal-alert-text">
+            Estàs segur que vols eliminar la cirurgia <span class="text-red-500">{{ props.surgery.name }}</span>?
+        </div>
+    </CustomModal>
     <WizardLayout>
+        <DeleteButton class="mb-4" @click="isOpen = true" />
         <form @submit.prevent="submit" class="edit-surgery-form">
             <h1 class="edit-surgery-form-title">Editant cirurgia</h1>
             <FormInput
@@ -61,6 +75,10 @@ const submit = () => {
     gap: 15px;
 }
 .edit-surgery-form-title {
+    font-size: 1.5rem;
+}
+
+.edit-surgery-modal-alert-text {
     font-size: 1.5rem;
 }
 
