@@ -22,13 +22,16 @@
             router.get(props.referer);
         }
     }
+
+    const baseUrl = import.meta.env.VITE_APP_URL;
+
 </script>
 
 <template>
     <AuthenticatedLayout>
         <div class="audit-log-container">
             <div class="audit-log-go-back-container" @click="goBack">
-                <img src="/assets/icons/undo.svg" alt="Tornar" />
+                <img :src="`${baseUrl}/assets/icons/undo.svg`" alt="Tornar" />
                 <span>Tornar</span>
             </div>
             <div class="audit-log-content">

@@ -5,18 +5,20 @@ function newTab(url) {
     window.open(url, '_blank');
 }
 
+const baseUrl = import.meta.env.VITE_APP_URL;
+
 </script>
 
 <template>
     <AuthenticatedLayout>
         <h1 class="text-2xl font-semibold text-gray-900">Manuals</h1>
         <div class="grid gap-4">
-            <div class="documentation-pdf" @click="newTab('/docs/Manual_Usuari_Trueta_Mobile.pdf')">
-                <img src="/assets/icons/file-pdf.svg" alt="PDF" />
+            <div class="documentation-pdf" @click="newTab(`${baseUrl}/docs/Manual_Usuari_Trueta_Mobile.pdf`)">
+                <img src="assets/icons/file-pdf.svg" alt="PDF" />
                 <span>Manual d'usuari per dispositius mòbils</span>
             </div>
-            <div class="documentation-pdf" @click="newTab('/docs/Manual_Administrador_Gestor_Trueta_Mobile.pdf')">
-                <img src="/assets/icons/file-pdf.svg" alt="PDF" />
+            <div class="documentation-pdf" @click="newTab(`${baseUrl}/docs/Manual_Administrador_Gestor_Trueta_Mobile.pdf`)">
+                <img src="assets/icons/file-pdf.svg" alt="PDF" />
                 <span>Manual de gestor i administrador per dispositius mòbils</span>
             </div>
         </div>

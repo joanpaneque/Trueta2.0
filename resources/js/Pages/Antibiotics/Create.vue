@@ -14,6 +14,8 @@ function submit() {
     form.post(route('antibiotics.store'));
 }
 
+const baseUrl = import.meta.env.VITE_APP_URL;
+
 </script>
 
 <template>
@@ -24,7 +26,7 @@ function submit() {
                 v-model="form.name"
                 type="text"
                 placeholder="Nom"
-                icon="/assets/icons/medicine.svg"
+                :icon="`${baseUrl}/assets/icons/medicine.svg`"
                 id="name"
                 name="name"
                 autofocus
@@ -32,7 +34,7 @@ function submit() {
             <FormTextarea
                 v-model="form.description"
                 placeholder="Descripció"
-                icon="/assets/icons/description-alt.svg"
+                :icon="`${baseUrl}/assets/icons/description-alt.svg`"
                 id="description"
                 name="description"
             />

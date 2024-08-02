@@ -32,7 +32,7 @@ function handleImageError() {
         <img
             id="background"
             class="absolute -left-20 top-0 max-w-[877px]"
-            src="https://laravel.com/assets/img/welcome/background.svg"
+            src="https://laravel.comassets/img/welcome/background.svg"
         />
         <div
             class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white"
@@ -89,13 +89,13 @@ function handleImageError() {
                         >
                             <div id="screenshot-container" class="relative flex w-full flex-1 items-stretch">
                                 <img
-                                    src="https://laravel.com/assets/img/welcome/docs-light.svg"
+                                    src="https://laravel.comassets/img/welcome/docs-light.svg"
                                     alt="Laravel documentation screenshot"
                                     class="aspect-video h-full w-full flex-1 rounded-[10px] object-top object-cover drop-shadow-[0px_4px_34px_rgba(0,0,0,0.06)] dark:hidden"
                                     @error="handleImageError"
                                 />
                                 <img
-                                    src="https://laravel.com/assets/img/welcome/docs-dark.svg"
+                                    src="https://laravel.comassets/img/welcome/docs-dark.svg"
                                     alt="Laravel documentation screenshot"
                                     class="hidden aspect-video h-full w-full flex-1 rounded-[10px] object-top object-cover drop-shadow-[0px_4px_34px_rgba(0,0,0,0.25)] dark:block"
                                 />

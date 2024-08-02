@@ -16,11 +16,12 @@
 
     const text = (pageId === 1 ? pageProps.surgery.name : pageProps.surgeryType.name);
 
+    const baseUrl = import.meta.env.VITE_APP_URL;
 </script>
 
 <template>
     <div class="edit-button-container">
-        <img src="/assets/icons/edit.svg" alt="Edit" />
+        <img :src="`${baseUrl}/assets/icons/edit.svg`" alt="Edit" />
         <span class="edit-button-text">{{ editReferences[pageId] }} <span class="surgery-name">{{text}}</span></span>
     </div>
 </template>

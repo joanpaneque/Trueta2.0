@@ -50,6 +50,8 @@ function toggleHealthFlag(id) {
 
 const user = usePage().props.auth.user;
 
+const baseUrl = import.meta.env.VITE_APP_URL;
+
 </script>
 
 <template>
@@ -64,7 +66,7 @@ const user = usePage().props.auth.user;
                 />
                 <div v-if="user.is_admin || user.is_manager"
                     class="health-flags-form-checkbox-edit" @click="router.get(route('surgeries.types.flags.edit', [props.surgeryId, props.surgeryTypeId, healthFlag.id]))">
-                    <img src="/assets/icons/edit.svg" />
+                    <img :src="`${baseUrl}/assets/icons/edit.svg`" alt="Editar"/>
                 </div>
             </div>
             <FormSubmit>Consultar</FormSubmit>

@@ -1,0 +1,1 @@
+import{o as t,g as s,u as a,O as n}from"./app-CETcvn20.js";const p={__name:"ApplicationLogo",setup(r){return(e,o)=>(t(),s("img",{src:"/assets/logos/logo-trueta-horizontal.svg",alt:"Application logo",class:"logo",onClick:o[0]||(o[0]=l=>a(n).get(e.route("index")))}))}};export{p as _};

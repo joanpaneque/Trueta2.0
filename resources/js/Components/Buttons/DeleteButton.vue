@@ -1,10 +1,10 @@
 <script setup>
-
+    const baseUrl = import.meta.env.VITE_APP_URL;
 </script>
 
 <template>
     <div class="delete-button-container">
-        <img src="/assets/icons/trash.svg" alt="Esborrar" />
+        <img :src="`${baseUrl}/assets/icons/trash.svg`" alt="Esborrar" />
         <span>Eliminar</span>
     </div>
 </template>

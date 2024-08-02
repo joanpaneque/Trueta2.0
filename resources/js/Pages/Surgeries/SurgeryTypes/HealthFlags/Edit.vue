@@ -50,6 +50,8 @@ const deleteHealthFlag = () => {
     form.delete(route('surgeries.types.flags.destroy', [props.surgeryId, props.surgeryTypeId, props.healthFlag.id]));
 };
 
+const baseUrl = import.meta.env.VITE_APP_URL;
+
 </script>
 
 <template>
@@ -65,7 +67,7 @@ const deleteHealthFlag = () => {
             <FormInput
                 v-model="form.name"
                 placeholder="Nom de la condició de salut"
-                icon="/assets/icons/pharmacy.svg"
+                :icon="`${baseUrl}/assets/icons/pharmacy.svg`"
                 id="name"
                 name="name"
                 autofocus
@@ -73,7 +75,7 @@ const deleteHealthFlag = () => {
             <FormCondition
                 v-model="form.description"
                 placeholder="Descripció de la condició de salut"
-                icon="/assets/icons/health-flag.svg"
+                :icon="`${baseUrl}/assets/icons/health-flag.svg`"
                 id="description"
                 name="description"
                 autofocus

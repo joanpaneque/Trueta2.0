@@ -108,5 +108,6 @@ onMounted(() => {
         padding: 5px 10px;
         color: #ffffff;
         border-radius: 5px;
+        cursor: pointer;
     }
 </style>

@@ -14,12 +14,13 @@
         router.get(route(indexRoute, params));
     }
 
+    const baseUrl = import.meta.env.VITE_APP_URL;
 
 </script>
 
 <template>
     <div class="create-button-container" @click="goBack">
-        <img src="/assets/icons/undo.svg" alt="Create" />
+        <img :src="`${baseUrl}/assets/icons/undo.svg`" alt="Undo" />
         <span>Tornar</span>
     </div>
 </template>

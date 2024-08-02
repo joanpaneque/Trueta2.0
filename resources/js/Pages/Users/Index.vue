@@ -27,6 +27,8 @@ const user = usePage().props.auth.user;
 const selectedTab = ref(0);
 const searchQuery = ref('');
 
+const baseUrl = import.meta.env.VITE_APP_URL;
+
 function filterWithQuery(user) {
     if (!user) return false;
     return user.email.toLowerCase().includes(searchQuery.value.toLowerCase());
@@ -92,7 +94,7 @@ function performUserDeactivation() {
             </div>
             <div class="profile-index-search">
                 <input v-model="searchQuery" type="text" :placeholder="`Cerca un usuari dins ${selectedTab === 0 ? 'd\'altes' : selectedTab === 1 ? 'de baixes' : 'de sol·licituds'}`">
-                <img src="/assets/icons/search.svg" alt="Cerca">
+                <img src="assets/icons/search.svg" alt="Cerca">
             </div>
             <div v-if="selectedTab === 0">
                 <div class="profile-index-tab">
@@ -106,10 +108,10 @@ function performUserDeactivation() {
                             <span>{{ userRegistration.email }}</span>
                             <span class="profile-index-tab-content-row-actions">
                                 <button @click="deactivateUser(userRegistration)" v-if="userRegistration.id !== user.id" class="red-button">
-                                    <img src="/assets/icons/arrow-small-down.svg" alt="Acceptar">
+                                    <img :src="`${baseUrl}/assets/icons/arrow-small-down.svg`" alt="Acceptar">
                                 </button>
                                 <button @click="router.get(route('profile.edit', userRegistration.id))">
-                                    <img src="/assets/icons/edit.svg" alt="Editar">
+                                    <img :src="`${baseUrl}/assets/icons/edit.svg`" alt="Editar">
                                 </button>
                             </span>
                         </div>
@@ -128,10 +130,10 @@ function performUserDeactivation() {
                             <span>{{ userDeactivation.email }}</span>
                             <span class="profile-index-tab-content-row-actions">
                                 <button @click="router.put(route('users.register', userDeactivation.id))" class="green-button">
-                                    <img src="/assets/icons/arrow-small-up.svg" alt="Acceptar">
+                                    <img :src="`${baseUrl}/assets/icons/arrow-small-up.svg`" alt="Acceptar">
                                 </button>
                                 <button @click="router.get(route('profile.edit', userDeactivation.id))">
-                                    <img src="/assets/icons/edit.svg" alt="Editar">
+                                    <img :src="`${baseUrl}/assets/icons/edit.svg`" alt="Editar">
                                 </button>
                             </span>
                         </div>
@@ -150,10 +152,10 @@ function performUserDeactivation() {
                             <span>{{ userRequest.email }}</span>
                             <span class="profile-index-tab-content-row-actions">
                                 <button @click="router.put(route('users.register', userRequest.id))" class="green-button">
-                                    <img src="/assets/icons/arrow-small-up.svg" alt="Rebutjar">
+                                    <img :src="`${baseUrl}/assets/icons/arrow-small-up.svg`" alt="Rebutjar">
                                 </button>
                                 <button @click="router.get(route('profile.edit', userRequest.id))">
-                                    <img src="/assets/icons/edit.svg" alt="Editar">
+                                    <img :src="`${baseUrl}/assets/icons/edit.svg`" alt="Editar">
                                 </button>
                             </span>
                         </div>

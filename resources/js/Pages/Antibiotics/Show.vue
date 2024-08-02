@@ -17,16 +17,19 @@ const props = defineProps({
 const formatDescription = (description) => {
     return description?.replace(/\n/g, '<br>');
 }
+
+const baseUrl = import.meta.env.VITE_APP_URL;
+
 </script>
 
 <template>
     <AuthenticatedLayout>
         <div class="go-back-button-container mb-4" @click="router.get(props.referer)">
-            <img src="/assets/icons/undo.svg" alt="Edit" />
+            <img :src="`${baseUrl}/assets/icons/undo.svg`" alt="Edit" />            
             <span class="go-back-button-text">Tornar</span>
         </div>
         <div class="edit-button-container mb-4" @click="router.get(route('antibiotics.edit', props.antibiotic.id))">
-            <img src="/assets/icons/edit.svg" alt="Edit" />
+            <img :src="`${baseUrl}/assets/icons/edit.svg`" alt="Editar" />
             <span class="edit-button-text">Editar <span class="lowercase">{{ props.antibiotic.name }}</span></span>
         </div>
         <div class="antibiotic-show-container">

@@ -14,6 +14,8 @@ const submit = () => {
     form.post(route('surgeries.store'));
 };
 
+const baseUrl = import.meta.env.VITE_APP_URL;
+
 </script>
 
 <template>
@@ -24,7 +26,7 @@ const submit = () => {
                 v-model="form.name"
                 type="text"
                 placeholder="Nom de la cirurgia"
-                icon="/assets/icons/bone-break.svg"
+                :icon="`${baseUrl}/assets/icons/bone-break.svg`"
                 id="name"
                 name="name"
                 autofocus
@@ -32,7 +34,7 @@ const submit = () => {
             <FormColor
                 v-model="form.color"
                 placeholder="Color de la cirurgia"
-                icon="/assets/icons/palette.svg"
+                :icon="`${baseUrl}/assets/icons/palette.svg`"                
                 id="color"
                 name="color"
             />

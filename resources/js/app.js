@@ -9,15 +9,32 @@ import { createPinia } from 'pinia';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Trueta';
 
+
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
-    setup({ el, App, props, plugin }) {
-        return createApp({ render: () => h(App, props) })
+    setup({ el, App, props, plugin }) {        
+
+        // Create the app instance
+        const app = createApp({
+            render: () => h(App, { ...props })
+        });
+
+        // Use the necessary plugins
+        app.use(plugin)
+           .use(ZiggyVue)
+           .use(createPinia());
+
+        // Mount the app
+        app.mount(el);
+
+        return app;
+
+        /* return createApp({ render: () => h(App, props, newVariable) })
             .use(plugin)
             .use(ZiggyVue)
             .use(createPinia())
-            .mount(el);
+            .mount(el); */
     },
     progress: {
         color: '#4B5563',

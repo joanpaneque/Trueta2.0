@@ -53,6 +53,9 @@ const submit = () => {
         },
     });
 };
+
+const baseUrl = import.meta.env.VITE_APP_URL;
+
 </script>
 
 <template>
@@ -66,7 +69,7 @@ const submit = () => {
                 v-model="form.email"
                 type="email"
                 placeholder="Correu electrònic"
-                icon="/assets/icons/at.svg"
+                :icon="`${baseUrl}/assets/icons/at.svg`"
                 id="email"
                 name="email"
             />
@@ -74,13 +77,13 @@ const submit = () => {
                 v-model="form.password"
                 type="password"
                 placeholder="Contrasenya"
-                icon="/assets/icons/lock.svg"
+                :icon="`${baseUrl}/assets/icons/lock.svg`"
                 id="password"
                 name="password"
             />
             <FormSubmit>Iniciar sessió</FormSubmit>
             <div>
-                <span>No t'han donat d'alta? <a href="/register">Sol·licita-la aqui</a></span>
+                <span>No t'han donat d'alta? <a href="register">Sol·licita-la aqui</a></span>
             </div>
         </form>
     </GuestLayout>

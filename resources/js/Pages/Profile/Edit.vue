@@ -33,6 +33,9 @@ const form = useForm({
 const submit = () => {
     form.put(route('profile.update', props.user.id));
 };
+
+const baseUrl = import.meta.env.VITE_APP_URL;
+
 </script>
 
 <template>
@@ -45,7 +48,7 @@ const submit = () => {
                 v-model="form.name"
                 type="text"
                 placeholder="Nom"
-                icon="/assets/icons/user.svg"
+                :icon="`${baseUrl}/assets/icons/user.svg`"
                 id="name"
                 name="name"
                 autofocus
@@ -54,7 +57,7 @@ const submit = () => {
                 v-model="form.email"
                 type="email"
                 placeholder="Correu electrònic"
-                icon="/assets/icons/at.svg"
+                :icon="`${baseUrl}/assets/icons/at.svg`"
                 id="email"
                 name="email"
             />
@@ -62,7 +65,7 @@ const submit = () => {
                 v-model="form.password"
                 type="password"
                 placeholder="Contrasenya"
-                icon="/assets/icons/lock.svg"
+                :icon="`${baseUrl}/assets/icons/lock.svg`"
                 id="password"
                 name="password"
             />
@@ -70,7 +73,7 @@ const submit = () => {
                 v-model="form.password_confirmation"
                 type="password"
                 placeholder="Confirmar contrasenya"
-                icon="/assets/icons/lock.svg"
+                :icon="`${baseUrl}/assets/icons/lock.svg`"
                 id="password_confirmation"
                 name="password_confirmation"
             />

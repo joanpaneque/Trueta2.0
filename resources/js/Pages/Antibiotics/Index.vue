@@ -20,17 +20,20 @@ const filteredAntibiotics = computed(() => {
         antibiotic.name.toLowerCase().includes(searchQuery.value.toLowerCase())
     );
 });
+
+const baseUrl = import.meta.env.VITE_APP_URL;
+
 </script>
 <template>
     <AuthenticatedLayout>
         <div class="antibiotics-index-container">
             <div class="create-button-container" @click="router.get(route('antibiotics.create'))">
-                <img src="/assets/icons/add.svg" alt="Create" />
+                <img :src="`${baseUrl}/assets/icons/add.svg`" alt="Create" />
                 <span>Crear antibiòtic</span>
             </div>
             <div class="antibiotics-index-search">
                 <input v-model="searchQuery" type="text" :placeholder="`Cerca un antibiòtic`">
-                <img src="/assets/icons/search.svg" alt="Cerca">
+                <img :src="`${baseUrl}/assets/icons/search.svg`" alt="Cerca" />
             </div>
             <div class="antibiotics-list">
                 <div v-for="antibiotic in filteredAntibiotics" :key="antibiotic.id" class="antibiotic-item"

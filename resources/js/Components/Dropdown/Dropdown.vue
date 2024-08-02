@@ -4,7 +4,7 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import { usePage } from '@inertiajs/vue3';
 
 // const { user } = usePage().props.value;
-
+const baseUrl = import.meta.env.VITE_APP_URL;
 
 const user = usePage().props.auth.user;
 
@@ -38,7 +38,7 @@ onUnmounted(() => {
     <div class="buildable-dropdown-container">
         <button @click="toggleDropdown" type="button" class="dropdown-button">
             <span>{{ user.name }} {{ user.surnames }}</span>
-            <img src="/assets/icons/arrow.svg" alt="arrow"
+            <img :src="`${baseUrl}/assets/icons/arrow.svg`" alt="arrow"
                 :style="{ transform: isDropdownUnfolded ? 'rotate(180deg)' : 'rotate(0deg)' }" />
         </button>
         <div v-show="isDropdownUnfolded" class="dropdown-options">

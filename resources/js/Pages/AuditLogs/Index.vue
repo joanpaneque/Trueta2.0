@@ -15,10 +15,7 @@ const props = defineProps({
 // get the current page
 console.log(props.auditLogs);
 
-
-
-
-
+const baseUrl = import.meta.env.VITE_APP_URL;
 
 </script>
 
@@ -31,9 +28,9 @@ console.log(props.auditLogs);
         <div class="audit-logs-table">
             <div class="audit-log" v-for="auditLog in props.auditLogs.data" @click="router.get(route('audit-logs.show', auditLog.id))">
                 <span class="audit-log-type">
-                    <img v-if="auditLog.type === 'update'" src="/assets/icons/refresh.svg" alt="updated">
-                    <img v-if="auditLog.type === 'delete'" src="/assets/icons/trash.svg" alt="updated">
-                    <img v-if="auditLog.type === 'create'" src="/assets/icons/add.svg" alt="updated">
+                    <img v-if="auditLog.type === 'update'" :src="`${baseUrl}/assets/icons/refresh.svg`" alt="updated">
+                    <img v-if="auditLog.type === 'delete'" :src="`${baseUrl}/assets/icons/trash.svg`" alt="updated">
+                    <img v-if="auditLog.type === 'create'" :src="`${baseUrl}/assets/icons/add.svg`" alt="updated">
                 </span>
                 <span class="audit-log-user">
                     {{ JSON.parse(auditLog.user).name }}

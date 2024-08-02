@@ -13,11 +13,13 @@
         '2': 'Condició de salut',
     }
 
+    const baseUrl = import.meta.env.VITE_APP_URL;
+
 </script>
 
 <template>
     <div class="create-button-container">
-        <img src="/assets/icons/add.svg" alt="Create" />
+        <img :src="`${baseUrl}/assets/icons/add.svg`" alt="Create" />
         <span>{{ createReferences[pageId] }}</span>
     </div>
 </template>

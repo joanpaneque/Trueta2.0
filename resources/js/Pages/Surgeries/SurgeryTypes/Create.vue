@@ -33,7 +33,7 @@ const submit = () => {
                 v-model="form.name"
                 type="text"
                 placeholder="Nom del tipus de cirurgia"
-                icon="/assets/icons/bone-break.svg"
+                :icon="`${baseUrl}/assets/icons/bone-break.svg`"
                 id="name"
                 name="name"
                 autofocus
@@ -45,7 +45,7 @@ const submit = () => {
             <FormColor
                 :value="surgery.color"
                 placeholder="Color de la cirurgia"
-                icon="/assets/icons/palette.svg"
+                :icon="`${baseUrl}/assets/icons/palette.svg`"
                 id="color"
                 name="color"
                 :disabled="true"

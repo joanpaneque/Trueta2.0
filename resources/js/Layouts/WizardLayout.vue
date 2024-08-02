@@ -25,6 +25,7 @@ const createPageRoute = createRoute(page);
 const editPageRoute = editRoute(page);
 const params = requiredParams(pageProps);
 
+const baseUrl = import.meta.env.VITE_APP_URL;
 
 </script>
 
@@ -97,7 +98,7 @@ const params = requiredParams(pageProps);
         <nav class="wizard-layout-aside">
             <div v-for="surgery in pageProps.surgeries" :key="surgery.id" class="wizard-layout-surgery" @click="router.get(route('surgeries.types.index', surgery.id))" @mouseover="hover.surgery = surgery.id" @mouseleave="hover.surgery = null" :class="{ 'hover': hover.surgery === surgery.id }">
                 <div class="wizard-layout-surgery-name">{{ surgery.name }}</div>
-                <div class="wizard-layout-surgery-icon"><img src="/assets/icons/arrow.svg" alt="arrow" /></div>
+                <div class="wizard-layout-surgery-icon"><img :src="`${baseUrl}/assets/icons/arrow.svg`" alt="arrow" /></div>
                 <div class="wizard-layout-surgery-types" v-if="pageProps.surgery?.id === surgery.id">
                     <div class="wizard-layout-surgery-type" v-for="sType in pageProps.surgeryTypes" :key="sType.id" @click.stop="router.get(route('surgeries.types.flags.index', [surgery.id, sType.id]))" @mouseover="hover.surgeryType = sType.id" @mouseleave="hover.surgeryType = null" :class="{ 'hover': hover.surgeryType === sType.id }">
                         {{ sType.name }}

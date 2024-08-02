@@ -47,6 +47,8 @@ const deleteSurgery = () => {
     form.delete(route('surgeries.types.destroy', [props.surgeryType.id, props.surgeryType.id]));
 };
 
+const baseUrl = import.meta.env.VITE_APP_URL;
+
 </script>
 
 <template>
@@ -63,7 +65,7 @@ const deleteSurgery = () => {
                 v-model="form.name"
                 type="text"
                 placeholder="Nom del tipus de cirurgia"
-                icon="/assets/icons/bone-break.svg"
+                :icon="`${baseUrl}/assets/icons/bone-break.svg`"
                 id="name"
                 name="name"
                 autofocus
@@ -75,7 +77,7 @@ const deleteSurgery = () => {
             <FormColor
                 :value="surgery.color"
                 placeholder="Color de la cirurgia"
-                icon="/assets/icons/palette.svg"
+                :icon="`${baseUrl}/assets/icons/palette.svg`"
                 id="color"
                 name="color"
                 :disabled="true"

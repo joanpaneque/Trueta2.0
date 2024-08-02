@@ -11,7 +11,7 @@
 <template>
     <div class="no-result-container">
         <div class="ambulance-gif">
-            <img src="/assets/gifs/ambulance.gif" alt="Tipus de cirurgia" />
+            <img src="assets/gifs/ambulance.gif" alt="Tipus de cirurgia" />
         </div>
         <p class="surgery-type-info" v-html="message.split('\\n').join('<br>')">
         </p>

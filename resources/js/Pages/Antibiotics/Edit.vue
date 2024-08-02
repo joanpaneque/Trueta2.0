@@ -38,6 +38,8 @@ function deleteAntibiotic() {
 
 const isOpen = ref(false);
 
+const baseUrl = import.meta.env.VITE_APP_URL;
+
 </script>
 
 <template>
@@ -48,7 +50,7 @@ const isOpen = ref(false);
     </CustomModal>
     <AuthenticatedLayout>
         <div class="go-back-button-container mb-4" @click="router.get(props.referer)">
-            <img src="/assets/icons/undo.svg" alt="Edit" />
+            <img :src="`${baseUrl}/assets/icons/undo.svg`" alt="Undo" />
             <span class="go-back-button-text">Tornar</span>
         </div>
         <DeleteButton class="mb-4" @click="isOpen = true" v-if="!props.deleted" />
@@ -61,7 +63,7 @@ const isOpen = ref(false);
                 v-model="form.name"
                 type="text"
                 placeholder="Nom"
-                icon="/assets/icons/medicine.svg"
+                :icon="`${baseUrl}/assets/icons/medicine.svg`"
                 id="name"
                 name="name"
                 autofocus
@@ -69,7 +71,7 @@ const isOpen = ref(false);
             <FormTextarea
                 v-model="form.description"
                 placeholder="Descripció"
-                icon="/assets/icons/description-alt.svg"
+                :icon="`${baseUrl}/assets/icons/description-alt.svg`"
                 id="description"
                 name="description"
             />

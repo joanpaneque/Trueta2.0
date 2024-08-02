@@ -38,6 +38,8 @@ const submit = () => {
     form.post(route('surgeries.types.flags.store', [props.surgeryId, props.surgeryTypeId]));
 };
 
+const baseUrl = import.meta.env.VITE_APP_URL;
+
 </script>
 
 <template>
@@ -51,7 +53,7 @@ const submit = () => {
                 v-model="form.name"
                 type="text"
                 placeholder="Nom de la condició de salut"
-                icon="/assets/icons/pharmacy.svg"
+                :icon="`${baseUrl}/assets/icons/pharmacy.svg`"
                 id="name"
                 name="name"
                 autofocus

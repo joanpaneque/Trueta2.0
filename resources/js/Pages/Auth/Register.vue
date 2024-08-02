@@ -26,6 +26,8 @@ const props = defineProps({
     }
 });
 
+const baseUrl = import.meta.env.VITE_APP_URL;
+
 </script>
 
 <template>
@@ -38,29 +40,30 @@ const props = defineProps({
                 v-model="form.name"
                 type="text"
                 placeholder="Nom"
-                icon="/assets/icons/id-card-clip-alt.svg"
+                :icon="`${baseUrl}/assets/icons/id-card-clip-alt.svg`"
             />
             <FormInput
                 v-model="form.email"
                 type="email"
                 placeholder="Correu electrònic"
-                icon="/assets/icons/at.svg"
+                :icon="`${baseUrl}/assets/icons/at.svg`"
+                
             />
             <FormInput
                 v-model="form.password"
                 type="password"
                 placeholder="Contrasenya"
-                icon="/assets/icons/lock.svg"
+                :icon="`${baseUrl}/assets/icons/lock.svg`"
             />
             <FormInput
                 v-model="form.password_confirmation"
                 type="password"
                 placeholder="Confirma la contrasenya"
-                icon="/assets/icons/lock.svg"
+                :icon="`${baseUrl}/assets/icons/lock.svg`"
             />
             <FormSubmit>Sol·licitar alta</FormSubmit>
             <div>
-                <span><a href="/login">Ja estic donat d'alta</a></span>
+                <span><a href="login">Ja estic donat d'alta</a></span>
             </div>
         </form>
     </GuestLayout>
