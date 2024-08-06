@@ -29,6 +29,16 @@ class DatabaseSeeder extends Seeder
             'request' => false
         ]);
 
+        User::factory()->create([
+            'name' => 'Midudev',
+            'email' => 'miduga@gmail.com',
+            'is_admin' => true,
+            'is_manager' => true,
+            'registered' => true,
+            'deactivated' => false,
+            'request' => false
+        ]);
+
         User::factory(20)->create();
 
         Surgery::create([
